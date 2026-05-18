@@ -22,6 +22,7 @@ const els = {
   formContainer: document.querySelector("#formContainer"),
   jsonContainer: document.querySelector("#jsonContainer"),
   toggleInputMode: document.querySelector("#toggleInputMode"),
+  loadingOverlay: document.querySelector("#loadingOverlay"),
 };
 
 init().catch(showError);
@@ -280,6 +281,8 @@ function renderDocumentBadges(policy, claim, submittedIds) {
 
 // Global scope functions for event handlers
 window.updateClaim = (path, value) => {
+  if (document.body.classList.contains("is-running")) return;
+
   const parts = path.split(".");
   let target = state.currentClaim;
   for (let i = 0; i < parts.length - 1; i++) {
@@ -299,6 +302,8 @@ window.updateClaim = (path, value) => {
 };
 
 window.toggleProcedure = (proc) => {
+  if (document.body.classList.contains("is-running")) return;
+
   const procedures = state.currentClaim.claim.procedures;
   const index = procedures.findIndex(p => p.toLowerCase().includes(proc.toLowerCase()));
   if (index === -1) {
@@ -313,6 +318,8 @@ window.toggleProcedure = (proc) => {
 };
 
 window.toggleDocument = (docId) => {
+  if (document.body.classList.contains("is-running")) return;
+
   const submittedIds = state.currentClaim.claim.submittedDocumentIds;
   const index = submittedIds.indexOf(docId);
   if (index === -1) {
@@ -395,6 +402,13 @@ function showError(error) {
 }
 
 function setRunning(isRunning) {
+  document.body.classList.toggle("is-running", isRunning);
+  els.loadingOverlay?.setAttribute("aria-hidden", String(!isRunning));
+  document
+    .querySelectorAll("button, select, input, textarea")
+    .forEach((control) => {
+      control.disabled = isRunning;
+    });
   els.runAssessment.disabled = isRunning;
   els.runAssessment.textContent = isRunning ? "Running..." : "Run Assessment";
 }

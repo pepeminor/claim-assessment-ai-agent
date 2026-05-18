@@ -25,6 +25,7 @@ body {
 }
 
 .app {
+  position: relative;
   min-height: 100vh;
   padding: 24px;
 }
@@ -120,6 +121,11 @@ button { cursor: pointer; }
 button:hover { border-color: var(--accent); }
 button:disabled { cursor: wait; opacity: 0.65; }
 
+body.is-running .toolbar,
+body.is-running .workspace {
+  pointer-events: none;
+}
+
 .primary-button {
   min-width: 156px;
   background: var(--accent);
@@ -144,6 +150,61 @@ button:disabled { cursor: wait; opacity: 0.65; }
   grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr);
   gap: 16px;
   align-items: start;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(246, 247, 249, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+body.is-running .loading-overlay {
+  display: flex;
+}
+
+.loading-panel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(440px, calc(100vw - 48px));
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 48px rgba(23, 32, 51, 0.16);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.loading-panel strong {
+  display: block;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.loading-panel p {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 3px solid #cfd8e3;
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .panel {
