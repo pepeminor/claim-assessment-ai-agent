@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { assertClaimCase } from "./contracts.js";
-import type { ClaimCase } from "./types.js";
+import { assertClaimCase } from "../../domain/contracts.js";
+import type { ClaimCase } from "../../domain/types.js";
 
 const caseFiles = ["approval.json", "rejection.json", "request-more-info.json"];
 

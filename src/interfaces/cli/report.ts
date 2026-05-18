@@ -1,4 +1,4 @@
-import type { ClaimCase } from "./types.js";
+import type { ClaimCase } from "../../domain/types.js";
 
 export function reportFileNameForCase(claimCase: ClaimCase): string {
   if (claimCase.caseId.startsWith("CASE-MANUAL")) {

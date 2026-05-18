@@ -1,8 +1,8 @@
 import { strict as assert } from "node:assert";
-import { policies } from "./data.js";
-import { evaluateDecision } from "./decisionEngine.js";
-import { loadClaimCaseFile } from "./testCases.js";
-import { ToolRuntime } from "./tools.js";
+import { policies } from "../infrastructure/data.js";
+import { evaluateDecision } from "../domain/decisionEngine.js";
+import { loadClaimCaseFile } from "../interfaces/cli/testCases.js";
+import { ToolRuntime } from "../tools/tools.js";
 import type {
   BenefitCalculationResult,
   ClaimCase,
@@ -10,7 +10,7 @@ import type {
   MedicalNecessityResult,
   Policy,
   PolicyLookupResult,
-} from "./types.js";
+} from "../domain/types.js";
 
 async function main(): Promise<void> {
   await testApproval();

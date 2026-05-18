@@ -4,7 +4,7 @@ import type {
   PolicyLookupResult,
   ReasoningItem,
   ToolCallLog,
-} from "./types.js";
+} from "../domain/types.js";
 
 export function normalizeAssessmentReport(report: AssessmentReport): AssessmentReport {
   const clauses = extractPolicyClauses(report.toolCallLog);

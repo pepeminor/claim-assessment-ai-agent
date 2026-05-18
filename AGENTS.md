@@ -446,21 +446,30 @@ public/
 `-- styles.css
 
 src/
-|-- agent.ts
-|-- assessmentRunner.ts
-|-- contracts.ts
-|-- data.ts
-|-- decisionEngine.ts
-|-- decisionEngine.test.ts
-|-- llmClient.ts
-|-- normalizeReport.ts
-|-- report.ts
-|-- runTestCases.ts
-|-- server.ts
-|-- testCases.ts
-|-- tools.ts
-|-- types.ts
-`-- validation.ts
+|-- application/
+|   |-- agent.ts
+|   |-- assessmentRunner.ts
+|   |-- normalizeReport.ts
+|   |-- reportFinalizer.ts
+|   `-- validation.ts
+|-- domain/
+|   |-- contracts.ts
+|   |-- decisionEngine.ts
+|   `-- types.ts
+|-- infrastructure/
+|   |-- data.ts
+|   `-- llmClient.ts
+|-- interfaces/
+|   |-- cli/
+|   |   |-- report.ts
+|   |   |-- runTestCases.ts
+|   |   `-- testCases.ts
+|   `-- http/
+|       `-- server.ts
+|-- tests/
+|   `-- decisionEngine.test.ts
+`-- tools/
+    `-- tools.ts
 ```
 
 Current test cases:
@@ -487,7 +496,7 @@ npm run case:smoke -- test-cases/manual-template.json
 npm run ui
 ```
 
-The local UI is served by `src/server.ts` and static files in `public/`.
+The local UI is served by `src/interfaces/http/server.ts` and static files in `public/`.
 
 UI endpoints:
 
@@ -596,7 +605,7 @@ general
 
 Do not rely on clause id naming such as `*-ELIGIBILITY` for logic. Prefer explicit `role`.
 
-`src/contracts.ts` contains runtime schema contracts for:
+`src/domain/contracts.ts` contains runtime schema contracts for:
 
 - claim cases
 - policies
@@ -605,7 +614,7 @@ Do not rely on clause id naming such as `*-ELIGIBILITY` for logic. Prefer explic
 
 Keep these contracts updated whenever the model shape changes. They intentionally fail early with clear messages before the LLM runs.
 
-`src/decisionEngine.test.ts` contains LLM-independent tests for deterministic decision logic. Keep these tests broad because they are the fastest way to prove core assessment correctness without API quota.
+`src/tests/decisionEngine.test.ts` contains LLM-independent tests for deterministic decision logic. Keep these tests broad because they are the fastest way to prove core assessment correctness without API quota.
 
 For every recommendation:
 
@@ -623,7 +632,7 @@ Current risks to avoid:
 - Free-tier providers may return quota errors. Prefer `single` mode during development.
 - Invalid output artifacts such as `*.invalid-report.json` are local debugging artifacts and should not be treated as final submission outputs.
 - The current medical necessity checker is keyword based and mock-only.
-- Mock data lives in `data/*.json` and is loaded by `src/data.ts` with runtime schema contracts.
+- Mock data lives in `data/*.json` and is loaded by `src/infrastructure/data.ts` with runtime schema contracts.
 
 ## Planned Hardening Roadmap
 
@@ -632,14 +641,14 @@ Proceed in small phases and verify after each phase:
 1. Add explicit data/schema contracts.
 2. Extract deterministic recommendation logic from `validation.ts` into `decisionEngine.ts`.
 3. Add unit tests for decision logic independent of the LLM.
-4. Move mock policies/documents/medical rules out of `src/data.ts` into `data/*.json`. (Done)
+4. Move mock policies/documents/medical rules out of TypeScript fixtures into `data/*.json`. (Done)
 5. Harden report schema so reasoning can become structured objects with `reason` and `clauseIds`.
 6. Clean debug output artifacts and update README after each major change.
 
 Current hardening status:
 
-- `src/contracts.ts` validates input data and normalized assessment reports.
-- `src/decisionEngine.ts` owns deterministic recommendation logic.
-- `src/decisionEngine.test.ts` covers approval, rejection, request-more-info, and treatment end date outside coverage.
+- `src/domain/contracts.ts` validates input data and normalized assessment reports.
+- `src/domain/decisionEngine.ts` owns deterministic recommendation logic.
+- `src/tests/decisionEngine.test.ts` covers approval, rejection, request-more-info, and treatment end date outside coverage.
 - Mock data has been moved to `data/*.json`.
 - `outputs/*.invalid-report.json` is ignored as a debug artifact.

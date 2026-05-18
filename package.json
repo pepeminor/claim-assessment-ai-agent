@@ -6,12 +6,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "cases": "npm run build && node dist/runTestCases.js --llm",
-    "case": "npm run build && node dist/runTestCases.js --llm --file",
-    "cases:smoke": "npm run build && node dist/runTestCases.js --smoke",
-    "case:smoke": "npm run build && node dist/runTestCases.js --smoke --file",
-    "test:unit": "npm run build && node dist/decisionEngine.test.js",
-    "ui": "npm run build && node dist/server.js",
+    "cases": "npm run build && node dist/interfaces/cli/runTestCases.js --llm",
+    "case": "npm run build && node dist/interfaces/cli/runTestCases.js --llm --file",
+    "cases:smoke": "npm run build && node dist/interfaces/cli/runTestCases.js --smoke",
+    "case:smoke": "npm run build && node dist/interfaces/cli/runTestCases.js --smoke --file",
+    "test:unit": "npm run build && node dist/tests/decisionEngine.test.js",
+    "ui": "npm run build && node dist/interfaces/http/server.js",
     "test": "npm run typecheck && npm run test:unit && npm run cases:smoke"
   },
   "devDependencies": {

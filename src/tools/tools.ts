@@ -2,7 +2,7 @@ import {
   medicalNecessityRules,
   policies,
   submittedDocuments,
-} from "./data.js";
+} from "../infrastructure/data.js";
 import type {
   BenefitCalculationResult,
   ClaimType,
@@ -10,7 +10,7 @@ import type {
   MedicalNecessityResult,
   PolicyLookupResult,
   ToolCallLog,
-} from "./types.js";
+} from "../domain/types.js";
 
 export class ToolRuntime {
   private readonly logs: ToolCallLog[] = [];

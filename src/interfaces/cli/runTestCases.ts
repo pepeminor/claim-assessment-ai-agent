@@ -1,11 +1,11 @@
 import { writeFile, mkdir } from "node:fs/promises";
 import "dotenv/config";
-import { policies, submittedDocuments } from "./data.js";
-import { runLlmAssessment } from "./assessmentRunner.js";
+import { policies, submittedDocuments } from "../../infrastructure/data.js";
+import { runLlmAssessment } from "../../application/assessmentRunner.js";
 import { reportFileNameForCase } from "./report.js";
 import { loadClaimCaseFile, loadClaimCases } from "./testCases.js";
-import { ToolRuntime } from "./tools.js";
-import type { AssessmentReport, ClaimCase } from "./types.js";
+import { ToolRuntime } from "../../tools/tools.js";
+import type { AssessmentReport, ClaimCase } from "../../domain/types.js";
 
 export async function main(): Promise<void> {
   const manualFile = readFlagValue("--file");

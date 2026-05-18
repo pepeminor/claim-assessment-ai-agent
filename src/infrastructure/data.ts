@@ -4,12 +4,12 @@ import {
   assertMedicalNecessityRules,
   assertPolicyData,
   assertSubmittedDocuments,
-} from "./contracts.js";
+} from "../domain/contracts.js";
 import type {
   MedicalNecessityRule,
   Policy,
   SubmittedDocument,
-} from "./types.js";
+} from "../domain/types.js";
 
 const rawPolicies = readJson("data/policies.json");
 const rawSubmittedDocuments = readJson("data/submitted-documents.json");

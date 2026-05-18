@@ -1,10 +1,10 @@
 import { assessClaimCase, repairAssessmentReport } from "./agent.js";
-import { assertAssessmentReportShape } from "./contracts.js";
-import { medicalNecessityRules, policies, submittedDocuments } from "./data.js";
-import { evaluateDecision } from "./decisionEngine.js";
+import { assertAssessmentReportShape } from "../domain/contracts.js";
+import { medicalNecessityRules, policies, submittedDocuments } from "../infrastructure/data.js";
+import { evaluateDecision } from "../domain/decisionEngine.js";
 import { normalizeAssessmentReport } from "./normalizeReport.js";
 import { finalizeAssessmentReport } from "./reportFinalizer.js";
-import { ToolRuntime } from "./tools.js";
+import { ToolRuntime } from "../tools/tools.js";
 import type {
   AssessmentReport,
   BenefitCalculationResult,
@@ -14,7 +14,7 @@ import type {
   Policy,
   PolicyLookupResult,
   ToolCallLog,
-} from "./types.js";
+} from "../domain/types.js";
 import { validateAssessmentReport } from "./validation.js";
 
 export interface DeterministicAssessmentResult {

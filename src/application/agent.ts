@@ -1,6 +1,6 @@
-import { LlmClient } from "./llmClient.js";
-import type { ChatMessage, ChatTool, ChatToolCall } from "./llmClient.js";
-import { ToolRuntime } from "./tools.js";
+import { LlmClient } from "../infrastructure/llmClient.js";
+import type { ChatMessage, ChatTool, ChatToolCall } from "../infrastructure/llmClient.js";
+import { ToolRuntime } from "../tools/tools.js";
 import type {
   AssessmentReport,
   BenefitCalculationResult,
@@ -9,7 +9,7 @@ import type {
   DocumentVerificationResult,
   MedicalNecessityResult,
   PolicyLookupResult,
-} from "./types.js";
+} from "../domain/types.js";
 
 type DraftAssessmentReport = Omit<AssessmentReport, "toolCallLog">;
 

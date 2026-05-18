@@ -1,4 +1,4 @@
-import { evaluateDecision } from "./decisionEngine.js";
+import { evaluateDecision } from "../domain/decisionEngine.js";
 import type {
   AssessmentReport,
   BenefitCalculationResult,
@@ -9,7 +9,7 @@ import type {
   Policy,
   PolicyClause,
   PolicyLookupResult,
-} from "./types.js";
+} from "../domain/types.js";
 
 export function finalizeAssessmentReport(
   claimCase: ClaimCase,

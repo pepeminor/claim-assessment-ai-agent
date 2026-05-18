@@ -149,17 +149,35 @@ Each report contains:
 - Policy Citations
 - Tool Call Log
 
+## Architecture / Source Layout
+
+The TypeScript source is organized by responsibility:
+
+```text
+src/
+|-- domain/              # Core schemas, types, and deterministic decision rules
+|-- application/         # LLM orchestration, report normalization, finalization, validation
+|-- infrastructure/      # Data loading and LLM provider client
+|-- tools/               # Agent-callable deterministic tools and tool-call logging
+|-- interfaces/
+|   |-- cli/             # CLI runner, test-case loading, output file naming
+|   `-- http/            # Local UI/API server
+`-- tests/               # LLM-independent unit tests
+```
+
+This keeps the claim decision rules separate from the LLM/runtime integration and from the CLI/UI entry points.
+
 ## Tool Design Decisions
 
-- **Deterministic Core**: Tools are implemented as deterministic functions in `src/tools.ts`. This ensures that sensitive logic like benefit calculation (`calculateBenefit`) and document verification (`verifyDocument`) is handled by code, not by LLM "guessing".
-- **Schema-First Data**: Mock policy, document, and medical necessity rule data are stored as JSON in `data/` and validated against TypeScript interfaces in `src/types.ts` using runtime contracts in `src/contracts.ts`. This prevents the LLM from processing malformed data.
+- **Deterministic Core**: Tools are implemented as deterministic functions in `src/tools/tools.ts`. This ensures that sensitive logic like benefit calculation (`calculateBenefit`) and document verification (`verifyDocument`) is handled by code, not by LLM "guessing".
+- **Schema-First Data**: Mock policy, document, and medical necessity rule data are stored as JSON in `data/` and validated against TypeScript interfaces in `src/domain/types.ts` using runtime contracts in `src/domain/contracts.ts`. This prevents the LLM from processing malformed data.
 - **Traceable Citations**: Every policy benefit or exclusion is linked to a stable `clauseId`. Tools return these IDs, and the LLM is mandated to use them in the report, ensuring every decision is legally traceable.
-- **Stateful Tool Runtime**: `ToolRuntime` in `src/tools.ts` logs every call, including inputs, outputs, and timestamps. This log is appended to the final report for full auditability.
+- **Stateful Tool Runtime**: `ToolRuntime` in `src/tools/tools.ts` logs every call, including inputs, outputs, and timestamps. This log is appended to the final report for full auditability.
 - **Post-Validation Finalization**: The LLM drafts the assessment report, then `normalizeReport` and `reportFinalizer` align the final recommendation, document review, benefit values, and citations with deterministic tool outputs before validation accepts the report. This keeps the LLM in the reporting loop without trusting it for hard business rules.
 
 ## System Prompt Design
 
-The system prompt in `src/agent.ts` is designed for high-precision assessment:
+The system prompt in `src/application/agent.ts` is designed for high-precision assessment:
 
 - **Strict Sequence**: It mandates a specific tool-calling sequence: `verifyDocument` (all) -> `lookupPolicy` -> `checkMedicalNecessity` -> `calculateBenefit`. This ensures the agent has all context before making a recommendation.
 - **Anti-Hallucination**: Explicitly forbids inventing policy terms, limits, or citations. It anchors the agent to the tool outputs.
@@ -169,7 +187,7 @@ The system prompt in `src/agent.ts` is designed for high-precision assessment:
 
 ## Validation
 
-`src/validation.ts` acts as a deterministic guardrail for the LLM's output:
+`src/application/validation.ts` acts as a deterministic guardrail for the LLM's output:
 
 - Every submitted document was verified.
 - Tool order is correct.
@@ -182,7 +200,7 @@ The system prompt in `src/agent.ts` is designed for high-precision assessment:
 
 If validation fails, the CLI throws an error and does not write a misleading final report.
 
-`src/contracts.ts` also checks the normalized report shape before validation. Debug files matching `outputs/*.invalid-report.json` are ignored and should not be treated as submission artifacts.
+`src/domain/contracts.ts` also checks the normalized report shape before validation. Debug files matching `outputs/*.invalid-report.json` are ignored and should not be treated as submission artifacts.
 
 ## Timeline Estimate
 

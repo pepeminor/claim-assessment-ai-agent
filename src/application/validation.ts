@@ -7,8 +7,8 @@ import type {
   PolicyClause,
   PolicyLookupResult,
   ToolCallLog,
-} from "./types.js";
-import { evaluateDecision } from "./decisionEngine.js";
+} from "../domain/types.js";
+import { evaluateDecision } from "../domain/decisionEngine.js";
 
 export interface ValidationResult {
   ok: boolean;

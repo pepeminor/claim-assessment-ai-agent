@@ -3,9 +3,9 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import "dotenv/config";
-import { runDeterministicAssessment, runLlmAssessment, getUiData } from "./assessmentRunner.js";
-import { assertClaimCase } from "./contracts.js";
-import { loadClaimCaseFile } from "./testCases.js";
+import { runDeterministicAssessment, runLlmAssessment, getUiData } from "../../application/assessmentRunner.js";
+import { assertClaimCase } from "../../domain/contracts.js";
+import { loadClaimCaseFile } from "../cli/testCases.js";
 
 const port = Number(process.env.PORT ?? 3000);
 
