@@ -19,6 +19,8 @@ Required tools:
 
 The LLM must call tools in a logical, step-by-step sequence, culminating in a structured assessment report. All outputs are validated against deterministic business rules, ensuring that the agent's recommendations are reliable, traceable, and fully cited with specific policy clauses.
 
+The three test scenarios are assessed against one shared standard health policy (`POL-HEALTH-STANDARD-001`). This avoids test-case-shaped policy data: the approval, rejection, and request-more-info outcomes come from claim facts, exclusions, benefit terms, and document status rather than from separate policies designed for each outcome.
+
 ## Challenge Responses
 
 In addition to the code, the **`Logical_Answers/`** directory contains the independent written responses required by the challenge. Please review these documents for my detailed answers to the theoretical questions posed in the challenge.
@@ -118,6 +120,8 @@ The project includes three complete cases in `test-cases/`:
 - `rejection.json`: elective cosmetic rhinoplasty, expected `REJECT`.
 - `request-more-info.json`: outpatient specialist claim with incomplete, mismatched, and missing required documents, expected `REQUEST_MORE_INFO`.
 
+All three cases use the same active policy, `POL-HEALTH-STANDARD-001`, with different claim facts and members.
+
 Manual templates:
 
 - `test-cases/manual-template.json`: approval template.
@@ -148,7 +152,7 @@ Each report contains:
 ## Tool Design Decisions
 
 - **Deterministic Core**: Tools are implemented as deterministic functions in `src/tools.ts`. This ensures that sensitive logic like benefit calculation (`calculateBenefit`) and document verification (`verifyDocument`) is handled by code, not by LLM "guessing".
-- **Schema-First Data**: All mock data (policies, documents, rules) are stored as JSON in `data/` and validated against TypeScript interfaces in `src/types.ts` using runtime contracts in `src/contracts.ts`. This prevents the LLM from processing malformed data.
+- **Schema-First Data**: Mock policy, document, and medical necessity rule data are stored as JSON in `data/` and validated against TypeScript interfaces in `src/types.ts` using runtime contracts in `src/contracts.ts`. This prevents the LLM from processing malformed data.
 - **Traceable Citations**: Every policy benefit or exclusion is linked to a stable `clauseId`. Tools return these IDs, and the LLM is mandated to use them in the report, ensuring every decision is legally traceable.
 - **Stateful Tool Runtime**: `ToolRuntime` in `src/tools.ts` logs every call, including inputs, outputs, and timestamps. This log is appended to the final report for full auditability.
 - **Post-Validation Finalization**: The LLM drafts the assessment report, then `normalizeReport` and `reportFinalizer` align the final recommendation, document review, benefit values, and citations with deterministic tool outputs before validation accepts the report. This keeps the LLM in the reporting loop without trusting it for hard business rules.

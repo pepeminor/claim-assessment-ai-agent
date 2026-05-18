@@ -28,13 +28,13 @@
     }
   ],
   "policyVerification": {
-    "policyId": "POL-REJECT-001",
-    "policyNumber": "HLT-REJ-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
+    "policyNumber": "HLT-STD-001",
     "status": "active",
     "memberCovered": true,
     "treatmentDatesWithinCoverage": true,
     "waitingPeriodSatisfied": true,
-    "claimTypeCovered": true,
+    "claimTypeCovered": false,
     "applicableExclusionIds": [
       "EXC-COSMETIC"
     ]
@@ -49,7 +49,7 @@
     "ruleId": "MED-COSMETIC-RHINOPLASTY"
   },
   "benefitCalculation": {
-    "policyId": "POL-REJECT-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
     "claimType": "cosmetic_surgery",
     "submittedAmount": 3000,
     "eligibleAmount": 0,
@@ -58,45 +58,31 @@
     "memberResponsibility": 3000,
     "remainingLimitBeforeClaim": 0,
     "remainingLimitAfterClaim": 0,
-    "clauseIds": [
-      "POL-REJ-001-BEN-COSMETIC"
-    ],
+    "clauseIds": [],
     "issues": [
-      "Submitted amount exceeds the remaining policy limit."
+      "No matching policy benefit was found for this claim type."
     ]
   },
   "reasoning": [
     {
       "text": "A policy exclusion applies to this claim.",
       "clauseIds": [
-        "POL-REJ-001-EXC-COSMETIC"
+        "POL-STD-001-EXC-COSMETIC"
       ]
     },
     {
       "text": "The treatment is not clinically appropriate for the diagnosis.",
       "clauseIds": [
-        "POL-REJ-001-BEN-COSMETIC"
-      ]
-    },
-    {
-      "text": "The calculated covered amount is zero.",
-      "clauseIds": [
-        "POL-REJ-001-BEN-COSMETIC"
+        "POL-STD-001-EXC-COSMETIC"
       ]
     }
   ],
   "policyCitations": [
     {
-      "clauseId": "POL-REJ-001-EXC-COSMETIC",
+      "clauseId": "POL-STD-001-EXC-COSMETIC",
       "role": "exclusion",
       "title": "Cosmetic and Elective Procedure Exclusion",
       "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
-    },
-    {
-      "clauseId": "POL-REJ-001-BEN-COSMETIC",
-      "role": "benefit",
-      "title": "Cosmetic Surgery Benefit",
-      "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
     }
   ],
   "toolCallLog": [
@@ -113,7 +99,7 @@
         "status": "complete",
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     },
     {
       "toolName": "verifyDocument",
@@ -128,7 +114,7 @@
         "status": "complete",
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     },
     {
       "toolName": "verifyDocument",
@@ -143,19 +129,21 @@
         "status": "complete",
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     },
     {
       "toolName": "lookupPolicy",
       "input": {
-        "policyId": "POL-REJECT-001"
+        "policyId": "POL-HEALTH-STANDARD-001"
       },
       "output": {
         "policy": {
-          "policyId": "POL-REJECT-001",
-          "policyNumber": "HLT-REJ-001",
+          "policyId": "POL-HEALTH-STANDARD-001",
+          "policyNumber": "HLT-STD-001",
           "memberIds": [
-            "MEM-002"
+            "MEM-001",
+            "MEM-002",
+            "MEM-003"
           ],
           "status": "active",
           "coverageStartDate": "2026-01-01",
@@ -163,11 +151,18 @@
           "effectiveDate": "2026-01-01",
           "benefits": [
             {
-              "claimType": "cosmetic_surgery",
-              "annualLimit": 0,
+              "claimType": "inpatient_hospitalization",
+              "annualLimit": 10000,
               "usedAmount": 0,
-              "copayPercent": 0,
-              "clauseId": "POL-REJ-001-BEN-COSMETIC"
+              "copayPercent": 10,
+              "clauseId": "POL-STD-001-BEN-INPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "annualLimit": 1000,
+              "usedAmount": 100,
+              "copayPercent": 20,
+              "clauseId": "POL-STD-001-BEN-OUTPATIENT"
             }
           ],
           "exclusions": [
@@ -184,56 +179,148 @@
                 "rhinoplasty",
                 "cosmetic"
               ],
-              "clauseId": "POL-REJ-001-EXC-COSMETIC"
+              "clauseId": "POL-STD-001-EXC-COSMETIC"
             }
           ],
-          "waitingPeriods": [],
+          "waitingPeriods": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "days": 30,
+              "clauseId": "POL-STD-001-WAIT-INPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "days": 0,
+              "clauseId": "POL-STD-001-WAIT-OUTPATIENT"
+            }
+          ],
           "requiredDocuments": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "claim_form",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "itemized_bill",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "discharge_summary",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "medical_report",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
             {
               "claimType": "cosmetic_surgery",
               "documentType": "claim_form",
-              "clauseId": "POL-REJ-001-DOC-SURGERY"
+              "clauseId": "POL-STD-001-DOC-SURGERY"
             },
             {
               "claimType": "cosmetic_surgery",
               "documentType": "itemized_bill",
-              "clauseId": "POL-REJ-001-DOC-SURGERY"
+              "clauseId": "POL-STD-001-DOC-SURGERY"
             },
             {
               "claimType": "cosmetic_surgery",
               "documentType": "medical_report",
-              "clauseId": "POL-REJ-001-DOC-SURGERY"
+              "clauseId": "POL-STD-001-DOC-SURGERY"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "claim_form",
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "invoice",
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "medical_report",
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "referral_letter",
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "xray_report",
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             }
           ],
           "clauses": [
             {
-              "clauseId": "POL-REJ-001-ELIGIBILITY",
+              "clauseId": "POL-STD-001-ELIGIBILITY",
               "role": "eligibility",
               "title": "Policy Eligibility and Coverage Period",
-              "text": "Member MEM-002 is covered while policy HLT-REJ-001 is active from 2026-01-01 through 2026-12-31."
+              "text": "Members MEM-001, MEM-002, and MEM-003 are covered while policy HLT-STD-001 is active from 2026-01-01 through 2026-12-31."
             },
             {
-              "clauseId": "POL-REJ-001-BEN-COSMETIC",
+              "clauseId": "POL-STD-001-BEN-INPATIENT",
               "role": "benefit",
-              "title": "Cosmetic Surgery Benefit",
-              "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
+              "title": "Inpatient Hospitalization Benefit",
+              "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
             },
             {
-              "clauseId": "POL-REJ-001-EXC-COSMETIC",
+              "clauseId": "POL-STD-001-BEN-OUTPATIENT",
+              "role": "benefit",
+              "title": "Outpatient Specialist Benefit",
+              "text": "Outpatient specialist consultation is covered up to USD 1,000 per policy year after a 20 percent copay."
+            },
+            {
+              "clauseId": "POL-STD-001-WAIT-INPATIENT",
+              "role": "waiting_period",
+              "title": "Inpatient Waiting Period",
+              "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+            },
+            {
+              "clauseId": "POL-STD-001-WAIT-OUTPATIENT",
+              "role": "waiting_period",
+              "title": "Outpatient Waiting Period",
+              "text": "Outpatient specialist consultation has no waiting period."
+            },
+            {
+              "clauseId": "POL-STD-001-DOC-INPATIENT",
+              "role": "required_document",
+              "title": "Required Inpatient Claim Documents",
+              "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+            },
+            {
+              "clauseId": "POL-STD-001-DOC-SURGERY",
+              "role": "required_document",
+              "title": "Required Surgery Claim Documents",
+              "text": "Surgery claims require a claim form, itemized bill, and medical report."
+            },
+            {
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT",
+              "role": "required_document",
+              "title": "Required Outpatient Claim Documents",
+              "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+            },
+            {
+              "clauseId": "POL-STD-001-EXC-COSMETIC",
               "role": "exclusion",
               "title": "Cosmetic and Elective Procedure Exclusion",
               "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
             },
             {
-              "clauseId": "POL-REJ-001-DOC-SURGERY",
-              "role": "required_document",
-              "title": "Required Surgery Claim Documents",
-              "text": "Surgery claims require a claim form, itemized bill, and medical report."
+              "clauseId": "POL-STD-001-GEN-LISTED-BENEFITS",
+              "role": "general",
+              "title": "Listed Benefits Requirement",
+              "text": "A claim is payable only when the claim type is listed as a covered benefit and no exclusion applies."
             }
           ]
         }
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     },
     {
       "toolName": "checkMedicalNecessity",
@@ -252,17 +339,17 @@
         "reason": "Elective cosmetic rhinoplasty is not clinically necessary for cosmetic enhancement.",
         "ruleId": "MED-COSMETIC-RHINOPLASTY"
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     },
     {
       "toolName": "calculateBenefit",
       "input": {
-        "policyId": "POL-REJECT-001",
+        "policyId": "POL-HEALTH-STANDARD-001",
         "claimType": "cosmetic_surgery",
         "amount": 3000
       },
       "output": {
-        "policyId": "POL-REJECT-001",
+        "policyId": "POL-HEALTH-STANDARD-001",
         "claimType": "cosmetic_surgery",
         "submittedAmount": 3000,
         "eligibleAmount": 0,
@@ -271,14 +358,12 @@
         "memberResponsibility": 3000,
         "remainingLimitBeforeClaim": 0,
         "remainingLimitAfterClaim": 0,
-        "clauseIds": [
-          "POL-REJ-001-BEN-COSMETIC"
-        ],
+        "clauseIds": [],
         "issues": [
-          "Submitted amount exceeds the remaining policy limit."
+          "No matching policy benefit was found for this claim type."
         ]
       },
-      "timestamp": "2026-05-18T14:25:26.915Z"
+      "timestamp": "2026-05-18T15:10:34.381Z"
     }
   ]
 }

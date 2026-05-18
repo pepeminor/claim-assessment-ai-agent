@@ -50,8 +50,8 @@
     }
   ],
   "policyVerification": {
-    "policyId": "POL-RMI-001",
-    "policyNumber": "HLT-RMI-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
+    "policyNumber": "HLT-STD-001",
     "status": "active",
     "memberCovered": true,
     "treatmentDatesWithinCoverage": true,
@@ -70,7 +70,7 @@
     "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY"
   },
   "benefitCalculation": {
-    "policyId": "POL-RMI-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
     "claimType": "outpatient_specialist",
     "submittedAmount": 500,
     "eligibleAmount": 500,
@@ -80,7 +80,7 @@
     "remainingLimitBeforeClaim": 900,
     "remainingLimitAfterClaim": 400,
     "clauseIds": [
-      "POL-RMI-001-BEN-OUTPATIENT"
+      "POL-STD-001-BEN-OUTPATIENT"
     ],
     "issues": []
   },
@@ -88,13 +88,13 @@
     {
       "text": "One or more required documents are missing, incomplete, or mismatched.",
       "clauseIds": [
-        "POL-RMI-001-DOC-OUTPATIENT"
+        "POL-STD-001-DOC-OUTPATIENT"
       ]
     }
   ],
   "policyCitations": [
     {
-      "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+      "clauseId": "POL-STD-001-DOC-OUTPATIENT",
       "role": "required_document",
       "title": "Required Outpatient Claim Documents",
       "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
@@ -114,7 +114,7 @@
         "status": "complete",
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "verifyDocument",
@@ -129,7 +129,7 @@
         "status": "complete",
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "verifyDocument",
@@ -146,7 +146,7 @@
           "Diagnosis notes are present, but treatment plan page is missing."
         ]
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "verifyDocument",
@@ -163,18 +163,20 @@
           "Submitted file is a payment receipt, not the required referral letter."
         ]
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "lookupPolicy",
       "input": {
-        "policyId": "POL-RMI-001"
+        "policyId": "POL-HEALTH-STANDARD-001"
       },
       "output": {
         "policy": {
-          "policyId": "POL-RMI-001",
-          "policyNumber": "HLT-RMI-001",
+          "policyId": "POL-HEALTH-STANDARD-001",
+          "policyNumber": "HLT-STD-001",
           "memberIds": [
+            "MEM-001",
+            "MEM-002",
             "MEM-003"
           ],
           "status": "active",
@@ -183,77 +185,176 @@
           "effectiveDate": "2026-01-01",
           "benefits": [
             {
+              "claimType": "inpatient_hospitalization",
+              "annualLimit": 10000,
+              "usedAmount": 0,
+              "copayPercent": 10,
+              "clauseId": "POL-STD-001-BEN-INPATIENT"
+            },
+            {
               "claimType": "outpatient_specialist",
               "annualLimit": 1000,
               "usedAmount": 100,
               "copayPercent": 20,
-              "clauseId": "POL-RMI-001-BEN-OUTPATIENT"
+              "clauseId": "POL-STD-001-BEN-OUTPATIENT"
             }
           ],
-          "exclusions": [],
+          "exclusions": [
+            {
+              "exclusionId": "EXC-COSMETIC",
+              "claimTypes": [
+                "cosmetic_surgery"
+              ],
+              "diagnosisKeywords": [
+                "cosmetic",
+                "elective enhancement"
+              ],
+              "procedureKeywords": [
+                "rhinoplasty",
+                "cosmetic"
+              ],
+              "clauseId": "POL-STD-001-EXC-COSMETIC"
+            }
+          ],
           "waitingPeriods": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "days": 30,
+              "clauseId": "POL-STD-001-WAIT-INPATIENT"
+            },
             {
               "claimType": "outpatient_specialist",
               "days": 0,
-              "clauseId": "POL-RMI-001-WAIT-OUTPATIENT"
+              "clauseId": "POL-STD-001-WAIT-OUTPATIENT"
             }
           ],
           "requiredDocuments": [
             {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "claim_form",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "itemized_bill",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "discharge_summary",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "medical_report",
+              "clauseId": "POL-STD-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "claim_form",
+              "clauseId": "POL-STD-001-DOC-SURGERY"
+            },
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "itemized_bill",
+              "clauseId": "POL-STD-001-DOC-SURGERY"
+            },
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "medical_report",
+              "clauseId": "POL-STD-001-DOC-SURGERY"
+            },
+            {
               "claimType": "outpatient_specialist",
               "documentType": "claim_form",
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             },
             {
               "claimType": "outpatient_specialist",
               "documentType": "invoice",
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             },
             {
               "claimType": "outpatient_specialist",
               "documentType": "medical_report",
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             },
             {
               "claimType": "outpatient_specialist",
               "documentType": "referral_letter",
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             },
             {
               "claimType": "outpatient_specialist",
               "documentType": "xray_report",
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT"
             }
           ],
           "clauses": [
             {
-              "clauseId": "POL-RMI-001-ELIGIBILITY",
+              "clauseId": "POL-STD-001-ELIGIBILITY",
               "role": "eligibility",
               "title": "Policy Eligibility and Coverage Period",
-              "text": "Member MEM-003 is covered while policy HLT-RMI-001 is active from 2026-01-01 through 2026-12-31."
+              "text": "Members MEM-001, MEM-002, and MEM-003 are covered while policy HLT-STD-001 is active from 2026-01-01 through 2026-12-31."
             },
             {
-              "clauseId": "POL-RMI-001-BEN-OUTPATIENT",
+              "clauseId": "POL-STD-001-BEN-INPATIENT",
+              "role": "benefit",
+              "title": "Inpatient Hospitalization Benefit",
+              "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
+            },
+            {
+              "clauseId": "POL-STD-001-BEN-OUTPATIENT",
               "role": "benefit",
               "title": "Outpatient Specialist Benefit",
               "text": "Outpatient specialist consultation is covered up to USD 1,000 per policy year after a 20 percent copay."
             },
             {
-              "clauseId": "POL-RMI-001-WAIT-OUTPATIENT",
+              "clauseId": "POL-STD-001-WAIT-INPATIENT",
+              "role": "waiting_period",
+              "title": "Inpatient Waiting Period",
+              "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+            },
+            {
+              "clauseId": "POL-STD-001-WAIT-OUTPATIENT",
               "role": "waiting_period",
               "title": "Outpatient Waiting Period",
               "text": "Outpatient specialist consultation has no waiting period."
             },
             {
-              "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+              "clauseId": "POL-STD-001-DOC-INPATIENT",
+              "role": "required_document",
+              "title": "Required Inpatient Claim Documents",
+              "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+            },
+            {
+              "clauseId": "POL-STD-001-DOC-SURGERY",
+              "role": "required_document",
+              "title": "Required Surgery Claim Documents",
+              "text": "Surgery claims require a claim form, itemized bill, and medical report."
+            },
+            {
+              "clauseId": "POL-STD-001-DOC-OUTPATIENT",
               "role": "required_document",
               "title": "Required Outpatient Claim Documents",
               "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+            },
+            {
+              "clauseId": "POL-STD-001-EXC-COSMETIC",
+              "role": "exclusion",
+              "title": "Cosmetic and Elective Procedure Exclusion",
+              "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
+            },
+            {
+              "clauseId": "POL-STD-001-GEN-LISTED-BENEFITS",
+              "role": "general",
+              "title": "Listed Benefits Requirement",
+              "text": "A claim is payable only when the claim type is listed as a covered benefit and no exclusion applies."
             }
           ]
         }
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "checkMedicalNecessity",
@@ -274,17 +375,17 @@
         "reason": "Orthopedic consultation and X-ray are clinically appropriate for chronic knee pain evaluation.",
         "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY"
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     },
     {
       "toolName": "calculateBenefit",
       "input": {
-        "policyId": "POL-RMI-001",
+        "policyId": "POL-HEALTH-STANDARD-001",
         "claimType": "outpatient_specialist",
         "amount": 500
       },
       "output": {
-        "policyId": "POL-RMI-001",
+        "policyId": "POL-HEALTH-STANDARD-001",
         "claimType": "outpatient_specialist",
         "submittedAmount": 500,
         "eligibleAmount": 500,
@@ -294,11 +395,11 @@
         "remainingLimitBeforeClaim": 900,
         "remainingLimitAfterClaim": 400,
         "clauseIds": [
-          "POL-RMI-001-BEN-OUTPATIENT"
+          "POL-STD-001-BEN-OUTPATIENT"
         ],
         "issues": []
       },
-      "timestamp": "2026-05-18T14:25:39.880Z"
+      "timestamp": "2026-05-18T15:11:07.880Z"
     }
   ]
 }
