@@ -1,0 +1,606 @@
+[
+  {
+    "claimId": "CLM-APP-001",
+    "toolCallLog": [
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-APP-CLAIM-FORM"
+        },
+        "output": {
+          "documentId": "DOC-APP-CLAIM-FORM",
+          "claimId": "CLM-APP-001",
+          "documentType": "claim_form",
+          "expectedType": "claim_form",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:27:19.760Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-APP-ITEMIZED-BILL"
+        },
+        "output": {
+          "documentId": "DOC-APP-ITEMIZED-BILL",
+          "claimId": "CLM-APP-001",
+          "documentType": "itemized_bill",
+          "expectedType": "itemized_bill",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:27:19.761Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-APP-DISCHARGE"
+        },
+        "output": {
+          "documentId": "DOC-APP-DISCHARGE",
+          "claimId": "CLM-APP-001",
+          "documentType": "discharge_summary",
+          "expectedType": "discharge_summary",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:27:19.761Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-APP-MEDICAL"
+        },
+        "output": {
+          "documentId": "DOC-APP-MEDICAL",
+          "claimId": "CLM-APP-001",
+          "documentType": "medical_report",
+          "expectedType": "medical_report",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:27:19.761Z"
+      },
+      {
+        "toolName": "lookupPolicy",
+        "input": {
+          "policyId": "POL-APPROVAL-001"
+        },
+        "output": {
+          "policy": {
+            "policyId": "POL-APPROVAL-001",
+            "policyNumber": "HLT-APP-001",
+            "memberIds": [
+              "MEM-001"
+            ],
+            "status": "active",
+            "coverageStartDate": "2026-01-01",
+            "coverageEndDate": "2026-12-31",
+            "effectiveDate": "2026-01-01",
+            "benefits": [
+              {
+                "claimType": "inpatient_hospitalization",
+                "annualLimit": 10000,
+                "usedAmount": 0,
+                "copayPercent": 10,
+                "clauseId": "POL-APP-001-BEN-INPATIENT"
+              }
+            ],
+            "exclusions": [
+              {
+                "exclusionId": "EXC-COSMETIC",
+                "claimTypes": [
+                  "cosmetic_surgery"
+                ],
+                "diagnosisKeywords": [
+                  "cosmetic",
+                  "elective enhancement"
+                ],
+                "procedureKeywords": [
+                  "rhinoplasty cosmetic",
+                  "elective cosmetic"
+                ],
+                "clauseId": "POL-APP-001-EXC-COSMETIC"
+              }
+            ],
+            "waitingPeriods": [
+              {
+                "claimType": "inpatient_hospitalization",
+                "days": 30,
+                "clauseId": "POL-APP-001-WAIT-INPATIENT"
+              }
+            ],
+            "requiredDocuments": [
+              {
+                "claimType": "inpatient_hospitalization",
+                "documentType": "claim_form",
+                "clauseId": "POL-APP-001-DOC-INPATIENT"
+              },
+              {
+                "claimType": "inpatient_hospitalization",
+                "documentType": "itemized_bill",
+                "clauseId": "POL-APP-001-DOC-INPATIENT"
+              },
+              {
+                "claimType": "inpatient_hospitalization",
+                "documentType": "discharge_summary",
+                "clauseId": "POL-APP-001-DOC-INPATIENT"
+              },
+              {
+                "claimType": "inpatient_hospitalization",
+                "documentType": "medical_report",
+                "clauseId": "POL-APP-001-DOC-INPATIENT"
+              }
+            ],
+            "clauses": [
+              {
+                "clauseId": "POL-APP-001-ELIGIBILITY",
+                "role": "eligibility",
+                "title": "Policy Eligibility and Coverage Period",
+                "text": "Member MEM-001 is covered while policy HLT-APP-001 is active from 2026-01-01 through 2026-12-31."
+              },
+              {
+                "clauseId": "POL-APP-001-BEN-INPATIENT",
+                "role": "benefit",
+                "title": "Inpatient Hospitalization Benefit",
+                "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
+              },
+              {
+                "clauseId": "POL-APP-001-WAIT-INPATIENT",
+                "role": "waiting_period",
+                "title": "Inpatient Waiting Period",
+                "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+              },
+              {
+                "clauseId": "POL-APP-001-DOC-INPATIENT",
+                "role": "required_document",
+                "title": "Required Inpatient Claim Documents",
+                "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+              },
+              {
+                "clauseId": "POL-APP-001-EXC-COSMETIC",
+                "role": "exclusion",
+                "title": "Cosmetic Treatment Exclusion",
+                "text": "Cosmetic or elective enhancement procedures are excluded unless medically necessary after accidental injury."
+              }
+            ]
+          }
+        },
+        "timestamp": "2026-05-18T14:27:19.762Z"
+      },
+      {
+        "toolName": "checkMedicalNecessity",
+        "input": {
+          "diagnosis": "acute appendicitis",
+          "procedures": [
+            "laparoscopic appendectomy"
+          ]
+        },
+        "output": {
+          "diagnosis": "acute appendicitis",
+          "procedures": [
+            "laparoscopic appendectomy"
+          ],
+          "clinicallyAppropriate": true,
+          "reason": "Appendectomy is clinically appropriate for acute appendicitis.",
+          "ruleId": "MED-APPENDICITIS-APPENDECTOMY"
+        },
+        "timestamp": "2026-05-18T14:27:19.762Z"
+      },
+      {
+        "toolName": "calculateBenefit",
+        "input": {
+          "policyId": "POL-APPROVAL-001",
+          "claimType": "inpatient_hospitalization",
+          "amount": 4000
+        },
+        "output": {
+          "policyId": "POL-APPROVAL-001",
+          "claimType": "inpatient_hospitalization",
+          "submittedAmount": 4000,
+          "eligibleAmount": 4000,
+          "coveredAmount": 3600,
+          "copay": 400,
+          "memberResponsibility": 400,
+          "remainingLimitBeforeClaim": 10000,
+          "remainingLimitAfterClaim": 6000,
+          "clauseIds": [
+            "POL-APP-001-BEN-INPATIENT"
+          ],
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:27:19.762Z"
+      }
+    ]
+  },
+  {
+    "claimId": "CLM-REJ-001",
+    "toolCallLog": [
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-REJ-CLAIM-FORM"
+        },
+        "output": {
+          "documentId": "DOC-REJ-CLAIM-FORM",
+          "claimId": "CLM-REJ-001",
+          "documentType": "claim_form",
+          "expectedType": "claim_form",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-REJ-ITEMIZED-BILL"
+        },
+        "output": {
+          "documentId": "DOC-REJ-ITEMIZED-BILL",
+          "claimId": "CLM-REJ-001",
+          "documentType": "itemized_bill",
+          "expectedType": "itemized_bill",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-REJ-MEDICAL"
+        },
+        "output": {
+          "documentId": "DOC-REJ-MEDICAL",
+          "claimId": "CLM-REJ-001",
+          "documentType": "medical_report",
+          "expectedType": "medical_report",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      },
+      {
+        "toolName": "lookupPolicy",
+        "input": {
+          "policyId": "POL-REJECT-001"
+        },
+        "output": {
+          "policy": {
+            "policyId": "POL-REJECT-001",
+            "policyNumber": "HLT-REJ-001",
+            "memberIds": [
+              "MEM-002"
+            ],
+            "status": "active",
+            "coverageStartDate": "2026-01-01",
+            "coverageEndDate": "2026-12-31",
+            "effectiveDate": "2026-01-01",
+            "benefits": [
+              {
+                "claimType": "cosmetic_surgery",
+                "annualLimit": 0,
+                "usedAmount": 0,
+                "copayPercent": 0,
+                "clauseId": "POL-REJ-001-BEN-COSMETIC"
+              }
+            ],
+            "exclusions": [
+              {
+                "exclusionId": "EXC-COSMETIC",
+                "claimTypes": [
+                  "cosmetic_surgery"
+                ],
+                "diagnosisKeywords": [
+                  "cosmetic",
+                  "elective enhancement"
+                ],
+                "procedureKeywords": [
+                  "rhinoplasty",
+                  "cosmetic"
+                ],
+                "clauseId": "POL-REJ-001-EXC-COSMETIC"
+              }
+            ],
+            "waitingPeriods": [],
+            "requiredDocuments": [
+              {
+                "claimType": "cosmetic_surgery",
+                "documentType": "claim_form",
+                "clauseId": "POL-REJ-001-DOC-SURGERY"
+              },
+              {
+                "claimType": "cosmetic_surgery",
+                "documentType": "itemized_bill",
+                "clauseId": "POL-REJ-001-DOC-SURGERY"
+              },
+              {
+                "claimType": "cosmetic_surgery",
+                "documentType": "medical_report",
+                "clauseId": "POL-REJ-001-DOC-SURGERY"
+              }
+            ],
+            "clauses": [
+              {
+                "clauseId": "POL-REJ-001-ELIGIBILITY",
+                "role": "eligibility",
+                "title": "Policy Eligibility and Coverage Period",
+                "text": "Member MEM-002 is covered while policy HLT-REJ-001 is active from 2026-01-01 through 2026-12-31."
+              },
+              {
+                "clauseId": "POL-REJ-001-BEN-COSMETIC",
+                "role": "benefit",
+                "title": "Cosmetic Surgery Benefit",
+                "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
+              },
+              {
+                "clauseId": "POL-REJ-001-EXC-COSMETIC",
+                "role": "exclusion",
+                "title": "Cosmetic and Elective Procedure Exclusion",
+                "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
+              },
+              {
+                "clauseId": "POL-REJ-001-DOC-SURGERY",
+                "role": "required_document",
+                "title": "Required Surgery Claim Documents",
+                "text": "Surgery claims require a claim form, itemized bill, and medical report."
+              }
+            ]
+          }
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      },
+      {
+        "toolName": "checkMedicalNecessity",
+        "input": {
+          "diagnosis": "elective cosmetic enhancement",
+          "procedures": [
+            "rhinoplasty for cosmetic purposes"
+          ]
+        },
+        "output": {
+          "diagnosis": "elective cosmetic enhancement",
+          "procedures": [
+            "rhinoplasty for cosmetic purposes"
+          ],
+          "clinicallyAppropriate": false,
+          "reason": "Elective cosmetic rhinoplasty is not clinically necessary for cosmetic enhancement.",
+          "ruleId": "MED-COSMETIC-RHINOPLASTY"
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      },
+      {
+        "toolName": "calculateBenefit",
+        "input": {
+          "policyId": "POL-REJECT-001",
+          "claimType": "cosmetic_surgery",
+          "amount": 3000
+        },
+        "output": {
+          "policyId": "POL-REJECT-001",
+          "claimType": "cosmetic_surgery",
+          "submittedAmount": 3000,
+          "eligibleAmount": 0,
+          "coveredAmount": 0,
+          "copay": 0,
+          "memberResponsibility": 3000,
+          "remainingLimitBeforeClaim": 0,
+          "remainingLimitAfterClaim": 0,
+          "clauseIds": [
+            "POL-REJ-001-BEN-COSMETIC"
+          ],
+          "issues": [
+            "Submitted amount exceeds the remaining policy limit."
+          ]
+        },
+        "timestamp": "2026-05-18T14:25:26.915Z"
+      }
+    ]
+  },
+  {
+    "claimId": "CLM-RMI-001",
+    "toolCallLog": [
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-RMI-CLAIM-FORM"
+        },
+        "output": {
+          "documentId": "DOC-RMI-CLAIM-FORM",
+          "claimId": "CLM-RMI-001",
+          "documentType": "claim_form",
+          "expectedType": "claim_form",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-RMI-INVOICE"
+        },
+        "output": {
+          "documentId": "DOC-RMI-INVOICE",
+          "claimId": "CLM-RMI-001",
+          "documentType": "invoice",
+          "expectedType": "invoice",
+          "status": "complete",
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-RMI-MEDICAL"
+        },
+        "output": {
+          "documentId": "DOC-RMI-MEDICAL",
+          "claimId": "CLM-RMI-001",
+          "documentType": "medical_report",
+          "expectedType": "medical_report",
+          "status": "incomplete",
+          "issues": [
+            "Diagnosis notes are present, but treatment plan page is missing."
+          ]
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "verifyDocument",
+        "input": {
+          "documentId": "DOC-RMI-REFERRAL"
+        },
+        "output": {
+          "documentId": "DOC-RMI-REFERRAL",
+          "claimId": "CLM-RMI-001",
+          "documentType": "receipt",
+          "expectedType": "referral_letter",
+          "status": "mismatched",
+          "issues": [
+            "Submitted file is a payment receipt, not the required referral letter."
+          ]
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "lookupPolicy",
+        "input": {
+          "policyId": "POL-RMI-001"
+        },
+        "output": {
+          "policy": {
+            "policyId": "POL-RMI-001",
+            "policyNumber": "HLT-RMI-001",
+            "memberIds": [
+              "MEM-003"
+            ],
+            "status": "active",
+            "coverageStartDate": "2026-01-01",
+            "coverageEndDate": "2026-12-31",
+            "effectiveDate": "2026-01-01",
+            "benefits": [
+              {
+                "claimType": "outpatient_specialist",
+                "annualLimit": 1000,
+                "usedAmount": 100,
+                "copayPercent": 20,
+                "clauseId": "POL-RMI-001-BEN-OUTPATIENT"
+              }
+            ],
+            "exclusions": [],
+            "waitingPeriods": [
+              {
+                "claimType": "outpatient_specialist",
+                "days": 0,
+                "clauseId": "POL-RMI-001-WAIT-OUTPATIENT"
+              }
+            ],
+            "requiredDocuments": [
+              {
+                "claimType": "outpatient_specialist",
+                "documentType": "claim_form",
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              },
+              {
+                "claimType": "outpatient_specialist",
+                "documentType": "invoice",
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              },
+              {
+                "claimType": "outpatient_specialist",
+                "documentType": "medical_report",
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              },
+              {
+                "claimType": "outpatient_specialist",
+                "documentType": "referral_letter",
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              },
+              {
+                "claimType": "outpatient_specialist",
+                "documentType": "xray_report",
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+              }
+            ],
+            "clauses": [
+              {
+                "clauseId": "POL-RMI-001-ELIGIBILITY",
+                "role": "eligibility",
+                "title": "Policy Eligibility and Coverage Period",
+                "text": "Member MEM-003 is covered while policy HLT-RMI-001 is active from 2026-01-01 through 2026-12-31."
+              },
+              {
+                "clauseId": "POL-RMI-001-BEN-OUTPATIENT",
+                "role": "benefit",
+                "title": "Outpatient Specialist Benefit",
+                "text": "Outpatient specialist consultation is covered up to USD 1,000 per policy year after a 20 percent copay."
+              },
+              {
+                "clauseId": "POL-RMI-001-WAIT-OUTPATIENT",
+                "role": "waiting_period",
+                "title": "Outpatient Waiting Period",
+                "text": "Outpatient specialist consultation has no waiting period."
+              },
+              {
+                "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+                "role": "required_document",
+                "title": "Required Outpatient Claim Documents",
+                "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+              }
+            ]
+          }
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "checkMedicalNecessity",
+        "input": {
+          "diagnosis": "chronic knee pain",
+          "procedures": [
+            "orthopedic consultation",
+            "knee x-ray"
+          ]
+        },
+        "output": {
+          "diagnosis": "chronic knee pain",
+          "procedures": [
+            "orthopedic consultation",
+            "knee x-ray"
+          ],
+          "clinicallyAppropriate": true,
+          "reason": "Orthopedic consultation and X-ray are clinically appropriate for chronic knee pain evaluation.",
+          "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY"
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      },
+      {
+        "toolName": "calculateBenefit",
+        "input": {
+          "policyId": "POL-RMI-001",
+          "claimType": "outpatient_specialist",
+          "amount": 500
+        },
+        "output": {
+          "policyId": "POL-RMI-001",
+          "claimType": "outpatient_specialist",
+          "submittedAmount": 500,
+          "eligibleAmount": 500,
+          "coveredAmount": 400,
+          "copay": 100,
+          "memberResponsibility": 100,
+          "remainingLimitBeforeClaim": 900,
+          "remainingLimitAfterClaim": 400,
+          "clauseIds": [
+            "POL-RMI-001-BEN-OUTPATIENT"
+          ],
+          "issues": []
+        },
+        "timestamp": "2026-05-18T14:25:39.880Z"
+      }
+    ]
+  }
+]

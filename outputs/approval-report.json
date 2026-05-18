@@ -1,0 +1,321 @@
+{
+  "claimId": "CLM-APP-001",
+  "recommendation": "APPROVE",
+  "documentReview": [
+    {
+      "documentId": "DOC-APP-CLAIM-FORM",
+      "claimId": "CLM-APP-001",
+      "documentType": "claim_form",
+      "expectedType": "claim_form",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-APP-ITEMIZED-BILL",
+      "claimId": "CLM-APP-001",
+      "documentType": "itemized_bill",
+      "expectedType": "itemized_bill",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-APP-DISCHARGE",
+      "claimId": "CLM-APP-001",
+      "documentType": "discharge_summary",
+      "expectedType": "discharge_summary",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-APP-MEDICAL",
+      "claimId": "CLM-APP-001",
+      "documentType": "medical_report",
+      "expectedType": "medical_report",
+      "status": "complete",
+      "issues": []
+    }
+  ],
+  "policyVerification": {
+    "policyId": "POL-APPROVAL-001",
+    "policyNumber": "HLT-APP-001",
+    "status": "active",
+    "memberCovered": true,
+    "treatmentDatesWithinCoverage": true,
+    "waitingPeriodSatisfied": true,
+    "claimTypeCovered": true,
+    "applicableExclusionIds": []
+  },
+  "medicalNecessity": {
+    "diagnosis": "acute appendicitis",
+    "procedures": [
+      "laparoscopic appendectomy"
+    ],
+    "clinicallyAppropriate": true,
+    "reason": "Appendectomy is clinically appropriate for acute appendicitis.",
+    "ruleId": "MED-APPENDICITIS-APPENDECTOMY"
+  },
+  "benefitCalculation": {
+    "policyId": "POL-APPROVAL-001",
+    "claimType": "inpatient_hospitalization",
+    "submittedAmount": 4000,
+    "eligibleAmount": 4000,
+    "coveredAmount": 3600,
+    "copay": 400,
+    "memberResponsibility": 400,
+    "remainingLimitBeforeClaim": 10000,
+    "remainingLimitAfterClaim": 6000,
+    "clauseIds": [
+      "POL-APP-001-BEN-INPATIENT"
+    ],
+    "issues": []
+  },
+  "reasoning": [
+    {
+      "text": "All required assessment checks passed.",
+      "clauseIds": [
+        "POL-APP-001-ELIGIBILITY",
+        "POL-APP-001-BEN-INPATIENT",
+        "POL-APP-001-WAIT-INPATIENT",
+        "POL-APP-001-DOC-INPATIENT"
+      ]
+    }
+  ],
+  "policyCitations": [
+    {
+      "clauseId": "POL-APP-001-ELIGIBILITY",
+      "role": "eligibility",
+      "title": "Policy Eligibility and Coverage Period",
+      "text": "Member MEM-001 is covered while policy HLT-APP-001 is active from 2026-01-01 through 2026-12-31."
+    },
+    {
+      "clauseId": "POL-APP-001-BEN-INPATIENT",
+      "role": "benefit",
+      "title": "Inpatient Hospitalization Benefit",
+      "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
+    },
+    {
+      "clauseId": "POL-APP-001-WAIT-INPATIENT",
+      "role": "waiting_period",
+      "title": "Inpatient Waiting Period",
+      "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+    },
+    {
+      "clauseId": "POL-APP-001-DOC-INPATIENT",
+      "role": "required_document",
+      "title": "Required Inpatient Claim Documents",
+      "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+    }
+  ],
+  "toolCallLog": [
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-APP-CLAIM-FORM"
+      },
+      "output": {
+        "documentId": "DOC-APP-CLAIM-FORM",
+        "claimId": "CLM-APP-001",
+        "documentType": "claim_form",
+        "expectedType": "claim_form",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:27:19.760Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-APP-ITEMIZED-BILL"
+      },
+      "output": {
+        "documentId": "DOC-APP-ITEMIZED-BILL",
+        "claimId": "CLM-APP-001",
+        "documentType": "itemized_bill",
+        "expectedType": "itemized_bill",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:27:19.761Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-APP-DISCHARGE"
+      },
+      "output": {
+        "documentId": "DOC-APP-DISCHARGE",
+        "claimId": "CLM-APP-001",
+        "documentType": "discharge_summary",
+        "expectedType": "discharge_summary",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:27:19.761Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-APP-MEDICAL"
+      },
+      "output": {
+        "documentId": "DOC-APP-MEDICAL",
+        "claimId": "CLM-APP-001",
+        "documentType": "medical_report",
+        "expectedType": "medical_report",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:27:19.761Z"
+    },
+    {
+      "toolName": "lookupPolicy",
+      "input": {
+        "policyId": "POL-APPROVAL-001"
+      },
+      "output": {
+        "policy": {
+          "policyId": "POL-APPROVAL-001",
+          "policyNumber": "HLT-APP-001",
+          "memberIds": [
+            "MEM-001"
+          ],
+          "status": "active",
+          "coverageStartDate": "2026-01-01",
+          "coverageEndDate": "2026-12-31",
+          "effectiveDate": "2026-01-01",
+          "benefits": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "annualLimit": 10000,
+              "usedAmount": 0,
+              "copayPercent": 10,
+              "clauseId": "POL-APP-001-BEN-INPATIENT"
+            }
+          ],
+          "exclusions": [
+            {
+              "exclusionId": "EXC-COSMETIC",
+              "claimTypes": [
+                "cosmetic_surgery"
+              ],
+              "diagnosisKeywords": [
+                "cosmetic",
+                "elective enhancement"
+              ],
+              "procedureKeywords": [
+                "rhinoplasty cosmetic",
+                "elective cosmetic"
+              ],
+              "clauseId": "POL-APP-001-EXC-COSMETIC"
+            }
+          ],
+          "waitingPeriods": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "days": 30,
+              "clauseId": "POL-APP-001-WAIT-INPATIENT"
+            }
+          ],
+          "requiredDocuments": [
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "claim_form",
+              "clauseId": "POL-APP-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "itemized_bill",
+              "clauseId": "POL-APP-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "discharge_summary",
+              "clauseId": "POL-APP-001-DOC-INPATIENT"
+            },
+            {
+              "claimType": "inpatient_hospitalization",
+              "documentType": "medical_report",
+              "clauseId": "POL-APP-001-DOC-INPATIENT"
+            }
+          ],
+          "clauses": [
+            {
+              "clauseId": "POL-APP-001-ELIGIBILITY",
+              "role": "eligibility",
+              "title": "Policy Eligibility and Coverage Period",
+              "text": "Member MEM-001 is covered while policy HLT-APP-001 is active from 2026-01-01 through 2026-12-31."
+            },
+            {
+              "clauseId": "POL-APP-001-BEN-INPATIENT",
+              "role": "benefit",
+              "title": "Inpatient Hospitalization Benefit",
+              "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
+            },
+            {
+              "clauseId": "POL-APP-001-WAIT-INPATIENT",
+              "role": "waiting_period",
+              "title": "Inpatient Waiting Period",
+              "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+            },
+            {
+              "clauseId": "POL-APP-001-DOC-INPATIENT",
+              "role": "required_document",
+              "title": "Required Inpatient Claim Documents",
+              "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+            },
+            {
+              "clauseId": "POL-APP-001-EXC-COSMETIC",
+              "role": "exclusion",
+              "title": "Cosmetic Treatment Exclusion",
+              "text": "Cosmetic or elective enhancement procedures are excluded unless medically necessary after accidental injury."
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-05-18T14:27:19.762Z"
+    },
+    {
+      "toolName": "checkMedicalNecessity",
+      "input": {
+        "diagnosis": "acute appendicitis",
+        "procedures": [
+          "laparoscopic appendectomy"
+        ]
+      },
+      "output": {
+        "diagnosis": "acute appendicitis",
+        "procedures": [
+          "laparoscopic appendectomy"
+        ],
+        "clinicallyAppropriate": true,
+        "reason": "Appendectomy is clinically appropriate for acute appendicitis.",
+        "ruleId": "MED-APPENDICITIS-APPENDECTOMY"
+      },
+      "timestamp": "2026-05-18T14:27:19.762Z"
+    },
+    {
+      "toolName": "calculateBenefit",
+      "input": {
+        "policyId": "POL-APPROVAL-001",
+        "claimType": "inpatient_hospitalization",
+        "amount": 4000
+      },
+      "output": {
+        "policyId": "POL-APPROVAL-001",
+        "claimType": "inpatient_hospitalization",
+        "submittedAmount": 4000,
+        "eligibleAmount": 4000,
+        "coveredAmount": 3600,
+        "copay": 400,
+        "memberResponsibility": 400,
+        "remainingLimitBeforeClaim": 10000,
+        "remainingLimitAfterClaim": 6000,
+        "clauseIds": [
+          "POL-APP-001-BEN-INPATIENT"
+        ],
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:27:19.762Z"
+    }
+  ]
+}

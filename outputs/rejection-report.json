@@ -1,0 +1,284 @@
+{
+  "claimId": "CLM-REJ-001",
+  "recommendation": "REJECT",
+  "documentReview": [
+    {
+      "documentId": "DOC-REJ-CLAIM-FORM",
+      "claimId": "CLM-REJ-001",
+      "documentType": "claim_form",
+      "expectedType": "claim_form",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-REJ-ITEMIZED-BILL",
+      "claimId": "CLM-REJ-001",
+      "documentType": "itemized_bill",
+      "expectedType": "itemized_bill",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-REJ-MEDICAL",
+      "claimId": "CLM-REJ-001",
+      "documentType": "medical_report",
+      "expectedType": "medical_report",
+      "status": "complete",
+      "issues": []
+    }
+  ],
+  "policyVerification": {
+    "policyId": "POL-REJECT-001",
+    "policyNumber": "HLT-REJ-001",
+    "status": "active",
+    "memberCovered": true,
+    "treatmentDatesWithinCoverage": true,
+    "waitingPeriodSatisfied": true,
+    "claimTypeCovered": true,
+    "applicableExclusionIds": [
+      "EXC-COSMETIC"
+    ]
+  },
+  "medicalNecessity": {
+    "diagnosis": "elective cosmetic enhancement",
+    "procedures": [
+      "rhinoplasty for cosmetic purposes"
+    ],
+    "clinicallyAppropriate": false,
+    "reason": "Elective cosmetic rhinoplasty is not clinically necessary for cosmetic enhancement.",
+    "ruleId": "MED-COSMETIC-RHINOPLASTY"
+  },
+  "benefitCalculation": {
+    "policyId": "POL-REJECT-001",
+    "claimType": "cosmetic_surgery",
+    "submittedAmount": 3000,
+    "eligibleAmount": 0,
+    "coveredAmount": 0,
+    "copay": 0,
+    "memberResponsibility": 3000,
+    "remainingLimitBeforeClaim": 0,
+    "remainingLimitAfterClaim": 0,
+    "clauseIds": [
+      "POL-REJ-001-BEN-COSMETIC"
+    ],
+    "issues": [
+      "Submitted amount exceeds the remaining policy limit."
+    ]
+  },
+  "reasoning": [
+    {
+      "text": "A policy exclusion applies to this claim.",
+      "clauseIds": [
+        "POL-REJ-001-EXC-COSMETIC"
+      ]
+    },
+    {
+      "text": "The treatment is not clinically appropriate for the diagnosis.",
+      "clauseIds": [
+        "POL-REJ-001-BEN-COSMETIC"
+      ]
+    },
+    {
+      "text": "The calculated covered amount is zero.",
+      "clauseIds": [
+        "POL-REJ-001-BEN-COSMETIC"
+      ]
+    }
+  ],
+  "policyCitations": [
+    {
+      "clauseId": "POL-REJ-001-EXC-COSMETIC",
+      "role": "exclusion",
+      "title": "Cosmetic and Elective Procedure Exclusion",
+      "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
+    },
+    {
+      "clauseId": "POL-REJ-001-BEN-COSMETIC",
+      "role": "benefit",
+      "title": "Cosmetic Surgery Benefit",
+      "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
+    }
+  ],
+  "toolCallLog": [
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-REJ-CLAIM-FORM"
+      },
+      "output": {
+        "documentId": "DOC-REJ-CLAIM-FORM",
+        "claimId": "CLM-REJ-001",
+        "documentType": "claim_form",
+        "expectedType": "claim_form",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-REJ-ITEMIZED-BILL"
+      },
+      "output": {
+        "documentId": "DOC-REJ-ITEMIZED-BILL",
+        "claimId": "CLM-REJ-001",
+        "documentType": "itemized_bill",
+        "expectedType": "itemized_bill",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-REJ-MEDICAL"
+      },
+      "output": {
+        "documentId": "DOC-REJ-MEDICAL",
+        "claimId": "CLM-REJ-001",
+        "documentType": "medical_report",
+        "expectedType": "medical_report",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    },
+    {
+      "toolName": "lookupPolicy",
+      "input": {
+        "policyId": "POL-REJECT-001"
+      },
+      "output": {
+        "policy": {
+          "policyId": "POL-REJECT-001",
+          "policyNumber": "HLT-REJ-001",
+          "memberIds": [
+            "MEM-002"
+          ],
+          "status": "active",
+          "coverageStartDate": "2026-01-01",
+          "coverageEndDate": "2026-12-31",
+          "effectiveDate": "2026-01-01",
+          "benefits": [
+            {
+              "claimType": "cosmetic_surgery",
+              "annualLimit": 0,
+              "usedAmount": 0,
+              "copayPercent": 0,
+              "clauseId": "POL-REJ-001-BEN-COSMETIC"
+            }
+          ],
+          "exclusions": [
+            {
+              "exclusionId": "EXC-COSMETIC",
+              "claimTypes": [
+                "cosmetic_surgery"
+              ],
+              "diagnosisKeywords": [
+                "cosmetic",
+                "elective enhancement"
+              ],
+              "procedureKeywords": [
+                "rhinoplasty",
+                "cosmetic"
+              ],
+              "clauseId": "POL-REJ-001-EXC-COSMETIC"
+            }
+          ],
+          "waitingPeriods": [],
+          "requiredDocuments": [
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "claim_form",
+              "clauseId": "POL-REJ-001-DOC-SURGERY"
+            },
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "itemized_bill",
+              "clauseId": "POL-REJ-001-DOC-SURGERY"
+            },
+            {
+              "claimType": "cosmetic_surgery",
+              "documentType": "medical_report",
+              "clauseId": "POL-REJ-001-DOC-SURGERY"
+            }
+          ],
+          "clauses": [
+            {
+              "clauseId": "POL-REJ-001-ELIGIBILITY",
+              "role": "eligibility",
+              "title": "Policy Eligibility and Coverage Period",
+              "text": "Member MEM-002 is covered while policy HLT-REJ-001 is active from 2026-01-01 through 2026-12-31."
+            },
+            {
+              "clauseId": "POL-REJ-001-BEN-COSMETIC",
+              "role": "benefit",
+              "title": "Cosmetic Surgery Benefit",
+              "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
+            },
+            {
+              "clauseId": "POL-REJ-001-EXC-COSMETIC",
+              "role": "exclusion",
+              "title": "Cosmetic and Elective Procedure Exclusion",
+              "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
+            },
+            {
+              "clauseId": "POL-REJ-001-DOC-SURGERY",
+              "role": "required_document",
+              "title": "Required Surgery Claim Documents",
+              "text": "Surgery claims require a claim form, itemized bill, and medical report."
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    },
+    {
+      "toolName": "checkMedicalNecessity",
+      "input": {
+        "diagnosis": "elective cosmetic enhancement",
+        "procedures": [
+          "rhinoplasty for cosmetic purposes"
+        ]
+      },
+      "output": {
+        "diagnosis": "elective cosmetic enhancement",
+        "procedures": [
+          "rhinoplasty for cosmetic purposes"
+        ],
+        "clinicallyAppropriate": false,
+        "reason": "Elective cosmetic rhinoplasty is not clinically necessary for cosmetic enhancement.",
+        "ruleId": "MED-COSMETIC-RHINOPLASTY"
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    },
+    {
+      "toolName": "calculateBenefit",
+      "input": {
+        "policyId": "POL-REJECT-001",
+        "claimType": "cosmetic_surgery",
+        "amount": 3000
+      },
+      "output": {
+        "policyId": "POL-REJECT-001",
+        "claimType": "cosmetic_surgery",
+        "submittedAmount": 3000,
+        "eligibleAmount": 0,
+        "coveredAmount": 0,
+        "copay": 0,
+        "memberResponsibility": 3000,
+        "remainingLimitBeforeClaim": 0,
+        "remainingLimitAfterClaim": 0,
+        "clauseIds": [
+          "POL-REJ-001-BEN-COSMETIC"
+        ],
+        "issues": [
+          "Submitted amount exceeds the remaining policy limit."
+        ]
+      },
+      "timestamp": "2026-05-18T14:25:26.915Z"
+    }
+  ]
+}

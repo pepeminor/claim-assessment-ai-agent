@@ -1,0 +1,304 @@
+{
+  "claimId": "CLM-RMI-001",
+  "recommendation": "REQUEST_MORE_INFO",
+  "documentReview": [
+    {
+      "documentId": "DOC-RMI-CLAIM-FORM",
+      "claimId": "CLM-RMI-001",
+      "documentType": "claim_form",
+      "expectedType": "claim_form",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-RMI-INVOICE",
+      "claimId": "CLM-RMI-001",
+      "documentType": "invoice",
+      "expectedType": "invoice",
+      "status": "complete",
+      "issues": []
+    },
+    {
+      "documentId": "DOC-RMI-MEDICAL",
+      "claimId": "CLM-RMI-001",
+      "documentType": "medical_report",
+      "expectedType": "medical_report",
+      "status": "incomplete",
+      "issues": [
+        "Diagnosis notes are present, but treatment plan page is missing."
+      ]
+    },
+    {
+      "documentId": "DOC-RMI-REFERRAL",
+      "claimId": "CLM-RMI-001",
+      "documentType": "receipt",
+      "expectedType": "referral_letter",
+      "status": "mismatched",
+      "issues": [
+        "Submitted file is a payment receipt, not the required referral letter."
+      ]
+    },
+    {
+      "documentId": "MISSING-XRAY_REPORT",
+      "claimId": "CLM-RMI-001",
+      "documentType": "unknown",
+      "expectedType": "xray_report",
+      "status": "missing",
+      "issues": [
+        "Required document 'xray_report' was not submitted."
+      ]
+    }
+  ],
+  "policyVerification": {
+    "policyId": "POL-RMI-001",
+    "policyNumber": "HLT-RMI-001",
+    "status": "active",
+    "memberCovered": true,
+    "treatmentDatesWithinCoverage": true,
+    "waitingPeriodSatisfied": true,
+    "claimTypeCovered": true,
+    "applicableExclusionIds": []
+  },
+  "medicalNecessity": {
+    "diagnosis": "chronic knee pain",
+    "procedures": [
+      "orthopedic consultation",
+      "knee x-ray"
+    ],
+    "clinicallyAppropriate": true,
+    "reason": "Orthopedic consultation and X-ray are clinically appropriate for chronic knee pain evaluation.",
+    "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY"
+  },
+  "benefitCalculation": {
+    "policyId": "POL-RMI-001",
+    "claimType": "outpatient_specialist",
+    "submittedAmount": 500,
+    "eligibleAmount": 500,
+    "coveredAmount": 400,
+    "copay": 100,
+    "memberResponsibility": 100,
+    "remainingLimitBeforeClaim": 900,
+    "remainingLimitAfterClaim": 400,
+    "clauseIds": [
+      "POL-RMI-001-BEN-OUTPATIENT"
+    ],
+    "issues": []
+  },
+  "reasoning": [
+    {
+      "text": "One or more required documents are missing, incomplete, or mismatched.",
+      "clauseIds": [
+        "POL-RMI-001-DOC-OUTPATIENT"
+      ]
+    }
+  ],
+  "policyCitations": [
+    {
+      "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+      "role": "required_document",
+      "title": "Required Outpatient Claim Documents",
+      "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+    }
+  ],
+  "toolCallLog": [
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-RMI-CLAIM-FORM"
+      },
+      "output": {
+        "documentId": "DOC-RMI-CLAIM-FORM",
+        "claimId": "CLM-RMI-001",
+        "documentType": "claim_form",
+        "expectedType": "claim_form",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-RMI-INVOICE"
+      },
+      "output": {
+        "documentId": "DOC-RMI-INVOICE",
+        "claimId": "CLM-RMI-001",
+        "documentType": "invoice",
+        "expectedType": "invoice",
+        "status": "complete",
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-RMI-MEDICAL"
+      },
+      "output": {
+        "documentId": "DOC-RMI-MEDICAL",
+        "claimId": "CLM-RMI-001",
+        "documentType": "medical_report",
+        "expectedType": "medical_report",
+        "status": "incomplete",
+        "issues": [
+          "Diagnosis notes are present, but treatment plan page is missing."
+        ]
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "verifyDocument",
+      "input": {
+        "documentId": "DOC-RMI-REFERRAL"
+      },
+      "output": {
+        "documentId": "DOC-RMI-REFERRAL",
+        "claimId": "CLM-RMI-001",
+        "documentType": "receipt",
+        "expectedType": "referral_letter",
+        "status": "mismatched",
+        "issues": [
+          "Submitted file is a payment receipt, not the required referral letter."
+        ]
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "lookupPolicy",
+      "input": {
+        "policyId": "POL-RMI-001"
+      },
+      "output": {
+        "policy": {
+          "policyId": "POL-RMI-001",
+          "policyNumber": "HLT-RMI-001",
+          "memberIds": [
+            "MEM-003"
+          ],
+          "status": "active",
+          "coverageStartDate": "2026-01-01",
+          "coverageEndDate": "2026-12-31",
+          "effectiveDate": "2026-01-01",
+          "benefits": [
+            {
+              "claimType": "outpatient_specialist",
+              "annualLimit": 1000,
+              "usedAmount": 100,
+              "copayPercent": 20,
+              "clauseId": "POL-RMI-001-BEN-OUTPATIENT"
+            }
+          ],
+          "exclusions": [],
+          "waitingPeriods": [
+            {
+              "claimType": "outpatient_specialist",
+              "days": 0,
+              "clauseId": "POL-RMI-001-WAIT-OUTPATIENT"
+            }
+          ],
+          "requiredDocuments": [
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "claim_form",
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "invoice",
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "medical_report",
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "referral_letter",
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+            },
+            {
+              "claimType": "outpatient_specialist",
+              "documentType": "xray_report",
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+            }
+          ],
+          "clauses": [
+            {
+              "clauseId": "POL-RMI-001-ELIGIBILITY",
+              "role": "eligibility",
+              "title": "Policy Eligibility and Coverage Period",
+              "text": "Member MEM-003 is covered while policy HLT-RMI-001 is active from 2026-01-01 through 2026-12-31."
+            },
+            {
+              "clauseId": "POL-RMI-001-BEN-OUTPATIENT",
+              "role": "benefit",
+              "title": "Outpatient Specialist Benefit",
+              "text": "Outpatient specialist consultation is covered up to USD 1,000 per policy year after a 20 percent copay."
+            },
+            {
+              "clauseId": "POL-RMI-001-WAIT-OUTPATIENT",
+              "role": "waiting_period",
+              "title": "Outpatient Waiting Period",
+              "text": "Outpatient specialist consultation has no waiting period."
+            },
+            {
+              "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+              "role": "required_document",
+              "title": "Required Outpatient Claim Documents",
+              "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+            }
+          ]
+        }
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "checkMedicalNecessity",
+      "input": {
+        "diagnosis": "chronic knee pain",
+        "procedures": [
+          "orthopedic consultation",
+          "knee x-ray"
+        ]
+      },
+      "output": {
+        "diagnosis": "chronic knee pain",
+        "procedures": [
+          "orthopedic consultation",
+          "knee x-ray"
+        ],
+        "clinicallyAppropriate": true,
+        "reason": "Orthopedic consultation and X-ray are clinically appropriate for chronic knee pain evaluation.",
+        "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY"
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    },
+    {
+      "toolName": "calculateBenefit",
+      "input": {
+        "policyId": "POL-RMI-001",
+        "claimType": "outpatient_specialist",
+        "amount": 500
+      },
+      "output": {
+        "policyId": "POL-RMI-001",
+        "claimType": "outpatient_specialist",
+        "submittedAmount": 500,
+        "eligibleAmount": 500,
+        "coveredAmount": 400,
+        "copay": 100,
+        "memberResponsibility": 100,
+        "remainingLimitBeforeClaim": 900,
+        "remainingLimitAfterClaim": 400,
+        "clauseIds": [
+          "POL-RMI-001-BEN-OUTPATIENT"
+        ],
+        "issues": []
+      },
+      "timestamp": "2026-05-18T14:25:39.880Z"
+    }
+  ]
+}
