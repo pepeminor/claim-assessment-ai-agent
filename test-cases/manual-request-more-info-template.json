@@ -1,0 +1,22 @@
+{
+  "caseId": "CASE-MANUAL-RMI-001",
+  "expectedOutcome": "REQUEST_MORE_INFO",
+  "claim": {
+    "claimId": "CLM-MANUAL-RMI-001",
+    "policyId": "POL-RMI-001",
+    "memberId": "MEM-003",
+    "claimType": "outpatient_specialist",
+    "amount": 500,
+    "currency": "USD",
+    "diagnosis": "chronic knee pain",
+    "procedures": ["orthopedic consultation", "knee x-ray"],
+    "treatmentStartDate": "2026-05-02",
+    "treatmentEndDate": "2026-05-02",
+    "submittedDocumentIds": [
+      "DOC-RMI-CLAIM-FORM",
+      "DOC-RMI-INVOICE",
+      "DOC-RMI-MEDICAL",
+      "DOC-RMI-REFERRAL"
+    ]
+  }
+}

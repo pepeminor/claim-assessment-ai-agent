@@ -1,0 +1,21 @@
+{
+  "caseId": "CASE-REJECTION-001",
+  "expectedOutcome": "REJECT",
+  "claim": {
+    "claimId": "CLM-REJ-001",
+    "policyId": "POL-REJECT-001",
+    "memberId": "MEM-002",
+    "claimType": "cosmetic_surgery",
+    "amount": 3000,
+    "currency": "USD",
+    "diagnosis": "elective cosmetic enhancement",
+    "procedures": ["rhinoplasty for cosmetic purposes"],
+    "treatmentStartDate": "2026-04-10",
+    "treatmentEndDate": "2026-04-10",
+    "submittedDocumentIds": [
+      "DOC-REJ-CLAIM-FORM",
+      "DOC-REJ-ITEMIZED-BILL",
+      "DOC-REJ-MEDICAL"
+    ]
+  }
+}

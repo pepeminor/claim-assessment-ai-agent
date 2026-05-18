@@ -1,0 +1,24 @@
+{
+  "name": "claim-assessment-ai-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cases": "npm run build && node dist/runTestCases.js --llm",
+    "case": "npm run build && node dist/runTestCases.js --llm --file",
+    "cases:smoke": "npm run build && node dist/runTestCases.js --smoke",
+    "case:smoke": "npm run build && node dist/runTestCases.js --smoke --file",
+    "test:unit": "npm run build && node dist/decisionEngine.test.js",
+    "ui": "npm run build && node dist/server.js",
+    "test": "npm run typecheck && npm run test:unit && npm run cases:smoke"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}

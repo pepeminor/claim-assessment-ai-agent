@@ -1,0 +1,94 @@
+[
+  {
+    "documentId": "DOC-APP-CLAIM-FORM",
+    "claimId": "CLM-APP-001",
+    "expectedType": "claim_form",
+    "detectedType": "claim_form",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-APP-ITEMIZED-BILL",
+    "claimId": "CLM-APP-001",
+    "expectedType": "itemized_bill",
+    "detectedType": "itemized_bill",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-APP-DISCHARGE",
+    "claimId": "CLM-APP-001",
+    "expectedType": "discharge_summary",
+    "detectedType": "discharge_summary",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-APP-MEDICAL",
+    "claimId": "CLM-APP-001",
+    "expectedType": "medical_report",
+    "detectedType": "medical_report",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-REJ-CLAIM-FORM",
+    "claimId": "CLM-REJ-001",
+    "expectedType": "claim_form",
+    "detectedType": "claim_form",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-REJ-ITEMIZED-BILL",
+    "claimId": "CLM-REJ-001",
+    "expectedType": "itemized_bill",
+    "detectedType": "itemized_bill",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-REJ-MEDICAL",
+    "claimId": "CLM-REJ-001",
+    "expectedType": "medical_report",
+    "detectedType": "medical_report",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-RMI-CLAIM-FORM",
+    "claimId": "CLM-RMI-001",
+    "expectedType": "claim_form",
+    "detectedType": "claim_form",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-RMI-INVOICE",
+    "claimId": "CLM-RMI-001",
+    "expectedType": "invoice",
+    "detectedType": "invoice",
+    "status": "complete",
+    "issues": []
+  },
+  {
+    "documentId": "DOC-RMI-MEDICAL",
+    "claimId": "CLM-RMI-001",
+    "expectedType": "medical_report",
+    "detectedType": "medical_report",
+    "status": "incomplete",
+    "issues": [
+      "Diagnosis notes are present, but treatment plan page is missing."
+    ]
+  },
+  {
+    "documentId": "DOC-RMI-REFERRAL",
+    "claimId": "CLM-RMI-001",
+    "expectedType": "referral_letter",
+    "detectedType": "receipt",
+    "status": "mismatched",
+    "issues": [
+      "Submitted file is a payment receipt, not the required referral letter."
+    ]
+  }
+]

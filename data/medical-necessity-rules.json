@@ -1,0 +1,37 @@
+[
+  {
+    "ruleId": "MED-APPENDICITIS-APPENDECTOMY",
+    "diagnosisKeywords": [
+      "appendicitis"
+    ],
+    "procedureKeywords": [
+      "appendectomy"
+    ],
+    "clinicallyAppropriate": true,
+    "reason": "Appendectomy is clinically appropriate for acute appendicitis."
+  },
+  {
+    "ruleId": "MED-COSMETIC-RHINOPLASTY",
+    "diagnosisKeywords": [
+      "cosmetic",
+      "elective"
+    ],
+    "procedureKeywords": [
+      "rhinoplasty"
+    ],
+    "clinicallyAppropriate": false,
+    "reason": "Elective cosmetic rhinoplasty is not clinically necessary for cosmetic enhancement."
+  },
+  {
+    "ruleId": "MED-KNEE-ORTHOPEDIC-XRAY",
+    "diagnosisKeywords": [
+      "knee pain"
+    ],
+    "procedureKeywords": [
+      "orthopedic consultation",
+      "x-ray"
+    ],
+    "clinicallyAppropriate": true,
+    "reason": "Orthopedic consultation and X-ray are clinically appropriate for chronic knee pain evaluation."
+  }
+]

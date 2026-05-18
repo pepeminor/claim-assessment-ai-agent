@@ -1,0 +1,262 @@
+[
+  {
+    "policyId": "POL-APPROVAL-001",
+    "policyNumber": "HLT-APP-001",
+    "memberIds": [
+      "MEM-001"
+    ],
+    "status": "active",
+    "coverageStartDate": "2026-01-01",
+    "coverageEndDate": "2026-12-31",
+    "effectiveDate": "2026-01-01",
+    "benefits": [
+      {
+        "claimType": "inpatient_hospitalization",
+        "annualLimit": 10000,
+        "usedAmount": 0,
+        "copayPercent": 10,
+        "clauseId": "POL-APP-001-BEN-INPATIENT"
+      }
+    ],
+    "exclusions": [
+      {
+        "exclusionId": "EXC-COSMETIC",
+        "claimTypes": [
+          "cosmetic_surgery"
+        ],
+        "diagnosisKeywords": [
+          "cosmetic",
+          "elective enhancement"
+        ],
+        "procedureKeywords": [
+          "rhinoplasty cosmetic",
+          "elective cosmetic"
+        ],
+        "clauseId": "POL-APP-001-EXC-COSMETIC"
+      }
+    ],
+    "waitingPeriods": [
+      {
+        "claimType": "inpatient_hospitalization",
+        "days": 30,
+        "clauseId": "POL-APP-001-WAIT-INPATIENT"
+      }
+    ],
+    "requiredDocuments": [
+      {
+        "claimType": "inpatient_hospitalization",
+        "documentType": "claim_form",
+        "clauseId": "POL-APP-001-DOC-INPATIENT"
+      },
+      {
+        "claimType": "inpatient_hospitalization",
+        "documentType": "itemized_bill",
+        "clauseId": "POL-APP-001-DOC-INPATIENT"
+      },
+      {
+        "claimType": "inpatient_hospitalization",
+        "documentType": "discharge_summary",
+        "clauseId": "POL-APP-001-DOC-INPATIENT"
+      },
+      {
+        "claimType": "inpatient_hospitalization",
+        "documentType": "medical_report",
+        "clauseId": "POL-APP-001-DOC-INPATIENT"
+      }
+    ],
+    "clauses": [
+      {
+        "clauseId": "POL-APP-001-ELIGIBILITY",
+        "role": "eligibility",
+        "title": "Policy Eligibility and Coverage Period",
+        "text": "Member MEM-001 is covered while policy HLT-APP-001 is active from 2026-01-01 through 2026-12-31."
+      },
+      {
+        "clauseId": "POL-APP-001-BEN-INPATIENT",
+        "role": "benefit",
+        "title": "Inpatient Hospitalization Benefit",
+        "text": "Inpatient hospitalization is covered up to USD 10,000 per policy year after a 10 percent copay."
+      },
+      {
+        "clauseId": "POL-APP-001-WAIT-INPATIENT",
+        "role": "waiting_period",
+        "title": "Inpatient Waiting Period",
+        "text": "Inpatient hospitalization is eligible after a 30 day waiting period from the policy effective date."
+      },
+      {
+        "clauseId": "POL-APP-001-DOC-INPATIENT",
+        "role": "required_document",
+        "title": "Required Inpatient Claim Documents",
+        "text": "Inpatient claims require a claim form, itemized bill, discharge summary, and medical report."
+      },
+      {
+        "clauseId": "POL-APP-001-EXC-COSMETIC",
+        "role": "exclusion",
+        "title": "Cosmetic Treatment Exclusion",
+        "text": "Cosmetic or elective enhancement procedures are excluded unless medically necessary after accidental injury."
+      }
+    ]
+  },
+  {
+    "policyId": "POL-REJECT-001",
+    "policyNumber": "HLT-REJ-001",
+    "memberIds": [
+      "MEM-002"
+    ],
+    "status": "active",
+    "coverageStartDate": "2026-01-01",
+    "coverageEndDate": "2026-12-31",
+    "effectiveDate": "2026-01-01",
+    "benefits": [
+      {
+        "claimType": "cosmetic_surgery",
+        "annualLimit": 0,
+        "usedAmount": 0,
+        "copayPercent": 0,
+        "clauseId": "POL-REJ-001-BEN-COSMETIC"
+      }
+    ],
+    "exclusions": [
+      {
+        "exclusionId": "EXC-COSMETIC",
+        "claimTypes": [
+          "cosmetic_surgery"
+        ],
+        "diagnosisKeywords": [
+          "cosmetic",
+          "elective enhancement"
+        ],
+        "procedureKeywords": [
+          "rhinoplasty",
+          "cosmetic"
+        ],
+        "clauseId": "POL-REJ-001-EXC-COSMETIC"
+      }
+    ],
+    "waitingPeriods": [],
+    "requiredDocuments": [
+      {
+        "claimType": "cosmetic_surgery",
+        "documentType": "claim_form",
+        "clauseId": "POL-REJ-001-DOC-SURGERY"
+      },
+      {
+        "claimType": "cosmetic_surgery",
+        "documentType": "itemized_bill",
+        "clauseId": "POL-REJ-001-DOC-SURGERY"
+      },
+      {
+        "claimType": "cosmetic_surgery",
+        "documentType": "medical_report",
+        "clauseId": "POL-REJ-001-DOC-SURGERY"
+      }
+    ],
+    "clauses": [
+      {
+        "clauseId": "POL-REJ-001-ELIGIBILITY",
+        "role": "eligibility",
+        "title": "Policy Eligibility and Coverage Period",
+        "text": "Member MEM-002 is covered while policy HLT-REJ-001 is active from 2026-01-01 through 2026-12-31."
+      },
+      {
+        "clauseId": "POL-REJ-001-BEN-COSMETIC",
+        "role": "benefit",
+        "title": "Cosmetic Surgery Benefit",
+        "text": "Cosmetic surgery has no payable benefit unless another clause expressly grants coverage."
+      },
+      {
+        "clauseId": "POL-REJ-001-EXC-COSMETIC",
+        "role": "exclusion",
+        "title": "Cosmetic and Elective Procedure Exclusion",
+        "text": "Cosmetic surgery and elective enhancement procedures, including cosmetic rhinoplasty, are excluded from coverage."
+      },
+      {
+        "clauseId": "POL-REJ-001-DOC-SURGERY",
+        "role": "required_document",
+        "title": "Required Surgery Claim Documents",
+        "text": "Surgery claims require a claim form, itemized bill, and medical report."
+      }
+    ]
+  },
+  {
+    "policyId": "POL-RMI-001",
+    "policyNumber": "HLT-RMI-001",
+    "memberIds": [
+      "MEM-003"
+    ],
+    "status": "active",
+    "coverageStartDate": "2026-01-01",
+    "coverageEndDate": "2026-12-31",
+    "effectiveDate": "2026-01-01",
+    "benefits": [
+      {
+        "claimType": "outpatient_specialist",
+        "annualLimit": 1000,
+        "usedAmount": 100,
+        "copayPercent": 20,
+        "clauseId": "POL-RMI-001-BEN-OUTPATIENT"
+      }
+    ],
+    "exclusions": [],
+    "waitingPeriods": [
+      {
+        "claimType": "outpatient_specialist",
+        "days": 0,
+        "clauseId": "POL-RMI-001-WAIT-OUTPATIENT"
+      }
+    ],
+    "requiredDocuments": [
+      {
+        "claimType": "outpatient_specialist",
+        "documentType": "claim_form",
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+      },
+      {
+        "claimType": "outpatient_specialist",
+        "documentType": "invoice",
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+      },
+      {
+        "claimType": "outpatient_specialist",
+        "documentType": "medical_report",
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+      },
+      {
+        "claimType": "outpatient_specialist",
+        "documentType": "referral_letter",
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+      },
+      {
+        "claimType": "outpatient_specialist",
+        "documentType": "xray_report",
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT"
+      }
+    ],
+    "clauses": [
+      {
+        "clauseId": "POL-RMI-001-ELIGIBILITY",
+        "role": "eligibility",
+        "title": "Policy Eligibility and Coverage Period",
+        "text": "Member MEM-003 is covered while policy HLT-RMI-001 is active from 2026-01-01 through 2026-12-31."
+      },
+      {
+        "clauseId": "POL-RMI-001-BEN-OUTPATIENT",
+        "role": "benefit",
+        "title": "Outpatient Specialist Benefit",
+        "text": "Outpatient specialist consultation is covered up to USD 1,000 per policy year after a 20 percent copay."
+      },
+      {
+        "clauseId": "POL-RMI-001-WAIT-OUTPATIENT",
+        "role": "waiting_period",
+        "title": "Outpatient Waiting Period",
+        "text": "Outpatient specialist consultation has no waiting period."
+      },
+      {
+        "clauseId": "POL-RMI-001-DOC-OUTPATIENT",
+        "role": "required_document",
+        "title": "Required Outpatient Claim Documents",
+        "text": "Outpatient specialist claims require a claim form, invoice, medical report, referral letter, and X-ray report when imaging is part of the claim."
+      }
+    ]
+  }
+]

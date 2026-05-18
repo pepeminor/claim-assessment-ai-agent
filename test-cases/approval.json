@@ -1,0 +1,22 @@
+{
+  "caseId": "CASE-APPROVAL-001",
+  "expectedOutcome": "APPROVE",
+  "claim": {
+    "claimId": "CLM-APP-001",
+    "policyId": "POL-APPROVAL-001",
+    "memberId": "MEM-001",
+    "claimType": "inpatient_hospitalization",
+    "amount": 4000,
+    "currency": "USD",
+    "diagnosis": "acute appendicitis",
+    "procedures": ["laparoscopic appendectomy"],
+    "treatmentStartDate": "2026-03-15",
+    "treatmentEndDate": "2026-03-17",
+    "submittedDocumentIds": [
+      "DOC-APP-CLAIM-FORM",
+      "DOC-APP-ITEMIZED-BILL",
+      "DOC-APP-DISCHARGE",
+      "DOC-APP-MEDICAL"
+    ]
+  }
+}
