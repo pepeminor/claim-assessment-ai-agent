@@ -85,6 +85,7 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
   const memberCovered = policy.memberIds.includes(claim.memberId);
   const treatmentDatesWithinCoverage = areTreatmentDatesWithinCoverage(claimCase, policy);
   const waitingPeriodSatisfied = isWaitingPeriodSatisfied(claimCase, policy, waitingPeriod);
+  const exclusionClauseIds = unique(applicableExclusions.map((exclusion) => exclusion.clauseId));
   const reasons: DecisionReason[] = [];
 
   if (documentIssues.length > 0) {
@@ -128,11 +129,11 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
     });
   }
 
-  if (!benefit) {
+  if (!benefit && applicableExclusions.length === 0) {
     reasons.push({
       code: "CLAIM_TYPE_NOT_COVERED",
       message: "The policy does not include a benefit for this claim type.",
-      clauseIds: optionalClauseId(findClauseByRole(policy, "benefit")),
+      clauseIds: optionalClauseId(findClauseByRole(policy, "general")),
     });
   }
 
@@ -148,7 +149,7 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
     reasons.push({
       code: "EXCLUSION_APPLIES",
       message: "A policy exclusion applies to this claim.",
-      clauseIds: unique(applicableExclusions.map((exclusion) => exclusion.clauseId)),
+      clauseIds: exclusionClauseIds,
     });
   }
 
@@ -156,15 +157,19 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
     reasons.push({
       code: "MEDICAL_NECESSITY_FAILED",
       message: "The treatment is not clinically appropriate for the diagnosis.",
-      clauseIds: benefit ? [benefit.clauseId] : optionalClauseId(findClauseByRole(policy, "benefit")),
+      clauseIds: benefit
+        ? [benefit.clauseId]
+        : exclusionClauseIds.length > 0
+          ? exclusionClauseIds
+          : optionalClauseId(findClauseByRole(policy, "general")),
     });
   }
 
-  if (benefitCalculation.coveredAmount <= 0) {
+  if (benefitCalculation.coveredAmount <= 0 && applicableExclusions.length === 0) {
     reasons.push({
       code: "NO_PAYABLE_BENEFIT",
       message: "The calculated covered amount is zero.",
-      clauseIds: benefit ? [benefit.clauseId] : optionalClauseId(findClauseByRole(policy, "benefit")),
+      clauseIds: benefit ? [benefit.clauseId] : optionalClauseId(findClauseByRole(policy, "general")),
     });
   }
 

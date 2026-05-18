@@ -2,8 +2,8 @@
   "caseId": "CASE-MANUAL-RMI-001",
   "expectedOutcome": "REQUEST_MORE_INFO",
   "claim": {
-    "claimId": "CLM-MANUAL-RMI-001",
-    "policyId": "POL-RMI-001",
+    "claimId": "CLM-RMI-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
     "memberId": "MEM-003",
     "claimType": "outpatient_specialist",
     "amount": 500,

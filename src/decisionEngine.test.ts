@@ -27,10 +27,10 @@ async function testApproval(): Promise<void> {
   const decision = evaluateDecision(buildDecisionInput(claimCase));
 
   assert.equal(decision.recommendation, "APPROVE");
-  assert.ok(decision.requiredClauseIds.includes("POL-APP-001-ELIGIBILITY"));
-  assert.ok(decision.requiredClauseIds.includes("POL-APP-001-BEN-INPATIENT"));
-  assert.ok(decision.requiredClauseIds.includes("POL-APP-001-DOC-INPATIENT"));
-  assert.ok(decision.requiredClauseIds.includes("POL-APP-001-WAIT-INPATIENT"));
+  assert.ok(decision.requiredClauseIds.includes("POL-STD-001-ELIGIBILITY"));
+  assert.ok(decision.requiredClauseIds.includes("POL-STD-001-BEN-INPATIENT"));
+  assert.ok(decision.requiredClauseIds.includes("POL-STD-001-DOC-INPATIENT"));
+  assert.ok(decision.requiredClauseIds.includes("POL-STD-001-WAIT-INPATIENT"));
 }
 
 async function testRejectionByExclusion(): Promise<void> {
@@ -40,8 +40,9 @@ async function testRejectionByExclusion(): Promise<void> {
   assert.equal(decision.recommendation, "REJECT");
   assert.ok(decision.reasons.some((reason) => reason.code === "EXCLUSION_APPLIES"));
   assert.ok(decision.reasons.some((reason) => reason.code === "MEDICAL_NECESSITY_FAILED"));
-  assert.ok(decision.reasons.some((reason) => reason.code === "NO_PAYABLE_BENEFIT"));
-  assert.ok(decision.requiredClauseIds.includes("POL-REJ-001-EXC-COSMETIC"));
+  assert.ok(!decision.reasons.some((reason) => reason.code === "CLAIM_TYPE_NOT_COVERED"));
+  assert.ok(!decision.reasons.some((reason) => reason.code === "NO_PAYABLE_BENEFIT"));
+  assert.deepEqual(decision.requiredClauseIds, ["POL-STD-001-EXC-COSMETIC"]);
 }
 
 async function testRequestMoreInfoForDocuments(): Promise<void> {
@@ -49,7 +50,7 @@ async function testRequestMoreInfoForDocuments(): Promise<void> {
   const decision = evaluateDecision(buildDecisionInput(claimCase));
 
   assert.equal(decision.recommendation, "REQUEST_MORE_INFO");
-  assert.deepEqual(decision.requiredClauseIds, ["POL-RMI-001-DOC-OUTPATIENT"]);
+  assert.deepEqual(decision.requiredClauseIds, ["POL-STD-001-DOC-OUTPATIENT"]);
   assert.ok(decision.findings.requiredDocuments.some((document) => document.status === "incomplete"));
   assert.ok(decision.findings.requiredDocuments.some((document) => document.status === "mismatched"));
   assert.ok(decision.findings.requiredDocuments.some((document) => document.status === "missing"));

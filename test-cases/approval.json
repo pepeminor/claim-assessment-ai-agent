@@ -3,7 +3,7 @@
   "expectedOutcome": "APPROVE",
   "claim": {
     "claimId": "CLM-APP-001",
-    "policyId": "POL-APPROVAL-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
     "memberId": "MEM-001",
     "claimType": "inpatient_hospitalization",
     "amount": 4000,

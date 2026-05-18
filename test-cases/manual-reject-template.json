@@ -2,8 +2,8 @@
   "caseId": "CASE-MANUAL-REJECT-001",
   "expectedOutcome": "REJECT",
   "claim": {
-    "claimId": "CLM-MANUAL-REJECT-001",
-    "policyId": "POL-REJECT-001",
+    "claimId": "CLM-REJ-001",
+    "policyId": "POL-HEALTH-STANDARD-001",
     "memberId": "MEM-002",
     "claimType": "cosmetic_surgery",
     "amount": 3000,
