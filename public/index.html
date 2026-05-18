@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Claim Assessment AI Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <h1>Claim Assessment AI</h1>
+        </div>
+        <div class="status" id="status">Ready</div>
+      </header>
+
+      <section class="toolbar">
+        <label>
+          Assessment Template
+          <select id="templateSelect">
+            <option value="approval">Approval Case</option>
+            <option value="reject">Rejection Case</option>
+            <option value="requestMoreInfo">Clarification Case (RMI)</option>
+          </select>
+        </label>
+        <button id="runAssessment" class="primary-button">Run Assessment</button>
+      </section>
+
+      <section class="workspace">
+        <div class="panel editor-panel">
+          <div class="panel-header">
+            <h2>Input Claim Assessment</h2>
+            <button id="toggleInputMode" class="secondary-button" style="margin-left: auto;">Switch to JSON</button>
+          </div>
+          <div id="formContainer" class="form-container active">
+            <!-- Smart Form will be rendered here -->
+          </div>
+          <div id="jsonContainer" class="json-container">
+            <textarea id="claimInput" spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <div class="panel output-panel">
+          <div class="tabs">
+            <button class="tab active" data-tab="report">Report</button>
+            <button class="tab" data-tab="logs">Tool Logs</button>
+          </div>
+
+          <section id="report" class="tab-panel active">
+            <div id="reportOutput" class="report-document"></div>
+          </section>
+
+          <section id="logs" class="tab-panel">
+            <pre id="logsOutput" class="console-output"></pre>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app-config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
