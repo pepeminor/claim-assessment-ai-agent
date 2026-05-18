@@ -85,7 +85,7 @@ select, button, input {
   font: inherit;
 }
 
-select, button, input {
+select, button, input, .readonly-field {
   min-height: 40px;
   border: 1px solid var(--line);
   background: var(--panel);
@@ -101,6 +101,13 @@ select {
   background-position: right 10px center;
   background-size: 16px;
   padding-right: 36px;
+}
+
+.readonly-field {
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  font-size: 13px;
 }
 
 input:focus, select:focus {
@@ -244,6 +251,12 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .document-badge:hover { border-color: var(--accent); }
 .document-badge.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .document-badge.required { border-style: dashed; border-width: 1.5px; }
+.document-badge.missing {
+  cursor: default;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: #f3b4ad;
+}
 .document-badge.required::after { content: "*"; color: var(--danger); margin-left: 2px; }
 .document-badge.active.required::after { color: #fff; }
 

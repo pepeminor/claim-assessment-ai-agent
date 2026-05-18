@@ -98,9 +98,7 @@ function renderSmartForm() {
       <div class="form-row">
         <div class="form-group">
           <label>Policy ID</label>
-          <select onchange="updateClaim('claim.policyId', this.value)">
-            ${state.policies.map((p) => `<option value="${p.policyId}" ${p.policyId === claim.policyId ? "selected" : ""}>${p.policyId}</option>`).join("")}
-          </select>
+          <div class="readonly-field">${escapeHtml(policy ? `${policy.policyNumber} / ${policy.policyId}` : claim.policyId)}</div>
         </div>
         <div class="form-group">
           <label>Member ID</label>
@@ -155,7 +153,7 @@ function renderSmartForm() {
       <div class="form-group">
         <label>Submitted Documents (Click to toggle)</label>
         <div class="badge-cloud">
-          ${renderDocumentBadges(policy, claim.claimType, claim.submittedDocumentIds)}
+          ${renderDocumentBadges(policy, claim, claim.submittedDocumentIds)}
         </div>
       </div>
     </div>
@@ -168,6 +166,10 @@ function renderPolicyInspector(policy, claimType) {
   const benefit = policy.benefits.find((b) => b.claimType === claimType);
   const exclusion = policy.exclusions.find((e) => e.claimTypes.includes(claimType));
   const waitingPeriod = policy.waitingPeriods.find((w) => w.claimType === claimType);
+  const requiredDocs = policy.requiredDocuments
+    .filter((d) => d.claimType === claimType)
+    .map((d) => d.documentType)
+    .join(", ");
 
   return `
     <div class="policy-inspector">
@@ -192,6 +194,10 @@ function renderPolicyInspector(policy, claimType) {
         <div class="inspector-item" style="grid-column: span 2;">
           <label>Known Exclusion</label>
           <strong style="color: ${exclusion ? "var(--danger)" : "inherit"}">${exclusion ? exclusion.exclusionId : "None applicable to this type"}</strong>
+        </div>
+        <div class="inspector-item" style="grid-column: span 2;">
+          <label>Required Documents</label>
+          <strong>${escapeHtml(requiredDocs || "None configured")}</strong>
         </div>
       </div>
     </div>
@@ -235,15 +241,22 @@ function renderProcedureBadges(currentProcedures) {
   }).join("");
 }
 
-function renderDocumentBadges(policy, claimType, submittedIds) {
+function renderDocumentBadges(policy, claim, submittedIds) {
   const requiredDocs = policy?.requiredDocuments
-    .filter((d) => d.claimType === claimType)
+    .filter((d) => d.claimType === claim.claimType)
     .map((d) => d.documentType) || [];
 
-  // Get all unique document IDs available in the system
-  const allDocIds = [...new Set(state.documents.map((d) => d.documentId))];
+  const availableDocs = state.documents.filter(
+    (document) =>
+      document.claimId === claim.claimId || submittedIds.includes(document.documentId),
+  );
+  const availableDocIds = [...new Set(availableDocs.map((d) => d.documentId))];
+  const availableRequiredTypes = new Set(availableDocs.map((document) => document.expectedType));
+  const missingRequiredTypes = requiredDocs.filter(
+    (documentType) => !availableRequiredTypes.has(documentType),
+  );
 
-  return allDocIds.map((docId) => {
+  const documentBadges = availableDocIds.map((docId) => {
     const docData = state.documents.find((d) => d.documentId === docId);
     const isRequired = requiredDocs.includes(docData?.expectedType);
     const isActive = submittedIds.includes(docId);
@@ -255,7 +268,14 @@ function renderDocumentBadges(policy, claimType, submittedIds) {
         ${docId}
       </div>
     `;
-  }).join("");
+  });
+  const missingBadges = missingRequiredTypes.map((documentType) => `
+    <div class="document-badge missing required" title="Required document is not available for this claim scenario">
+      Missing ${escapeHtml(documentType)}
+    </div>
+  `);
+
+  return [...documentBadges, ...missingBadges].join("");
 }
 
 // Global scope functions for event handlers
